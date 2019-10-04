@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "372278206985",
+    "firebase_url": "https://fingerprintiot.firebaseio.com",
+    "project_id": "fingerprintiot",
+    "storage_bucket": "fingerprintiot.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:372278206985:android:796f66d6758bac61da4ed8",
+        "android_client_info": {
+          "package_name": "com.elsawy.ahmed.fingerprintiot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "372278206985-iea72tp4vu2krbr58iem82im9daniste.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elsawy.ahmed.fingerprintiot",
+            "certificate_hash": "5f0369f889883daf397e0d74da80d6f405e1bf36"
+          }
+        },
+        {
+          "client_id": "372278206985-1ldmj36itemlsedcmqf12afash7t2ple.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBg8Rhu0R9H92c1cmH37wsNE6jS7fNNYI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "372278206985-1ldmj36itemlsedcmqf12afash7t2ple.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:372278206985:android:b6a2491b73563fe0da4ed8",
+        "android_client_info": {
+          "package_name": "com.print.finger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "372278206985-1ldmj36itemlsedcmqf12afash7t2ple.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBg8Rhu0R9H92c1cmH37wsNE6jS7fNNYI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "372278206985-1ldmj36itemlsedcmqf12afash7t2ple.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

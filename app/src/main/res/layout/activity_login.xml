@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".Activities.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/login_sign_up_padding">
+
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/login_text"-->
+<!--            style="@style/headerStyle"-->
+<!--            />-->
+        <!--        android:drawableStart="@drawable/ic_keyboard_arrow_left_black_24dp"-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/login_sign_up_edit_text_margin_top"
+            android:textColorHint="@color/colorAccent"
+            app:hintTextAppearance="@style/TextLabel"
+            >
+
+            <EditText
+                android:id="@+id/login_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                style="@style/editTextStyle" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/login_sign_up_edit_text_margin_top"
+            android:textColorHint="@color/colorAccent"
+            app:hintTextAppearance="@style/TextLabel"
+            >
+
+            <EditText
+                android:id="@+id/login_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                style="@style/editTextStyle" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/forgot_password_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_password"
+            android:textSize="@dimen/forgot_password_text_size"
+            android:textColor="@color/colorAccent"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/forgot_password_margin_top"
+            />
+<!--        android:fontFamily="@font/calibri"-->
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="@dimen/login_sign_up_button_layout_width"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            style="@style/buttonStyle"
+            />
+
+        <TextView
+            android:id="@+id/login_register_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/don_t_have_an_account_register"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/do_not_have_account_text_size"
+            android:layout_marginTop="@dimen/do_not_have_account_margin_top"
+            android:layout_gravity="center_horizontal"
+            />
+<!--        android:fontFamily="@font/calibri"-->
+
+    </LinearLayout>
+
+</ScrollView>
