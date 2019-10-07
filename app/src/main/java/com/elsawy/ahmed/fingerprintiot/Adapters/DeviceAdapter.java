@@ -1,14 +1,18 @@
 package com.elsawy.ahmed.fingerprintiot.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.elsawy.ahmed.fingerprintiot.Activities.DeviceDetailActivity;
 import com.elsawy.ahmed.fingerprintiot.Models.Device;
+import com.elsawy.ahmed.fingerprintiot.Models.UserHistory;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.elsawy.ahmed.fingerprintiot.ViewHolder.DeviceViewHolder;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,7 +59,32 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
     public void onBindViewHolder(@NonNull DeviceViewHolder holder, int position) {
 
         final Device currentDevice = DeviceAdapter.this.deviceList.get(position);
-        holder.bindToDevice(currentDevice);
+        View.OnClickListener cardViewListener = view -> {
+            Intent intent = new Intent(DeviceAdapter.this.mContext, DeviceDetailActivity.class);
+            intent.putExtra("deviceInfo", currentDevice);
+            DeviceAdapter.this.mContext.startActivity(intent);
+        };
+
+        View.OnClickListener powerButtonListener = view -> {
+            UserHistory userHistory = new UserHistory();
+            //TODO handle username
+            userHistory.username = "ahmed elsawy";
+            userHistory.timestamp = System.currentTimeMillis() / 1000;
+            userHistory.changedWay = "mobile";
+
+            if (currentDevice.state.equals("ON")) {
+                userHistory.newState = "OFF";
+                DeviceAdapter.this.ref.child("Devices").child(currentDevice.key).child("state").setValue("OFF");
+            } else if (currentDevice.state.equals("OFF")) {
+                userHistory.newState = "ON";
+                DeviceAdapter.this.ref.child("Devices").child(currentDevice.key).child("state").setValue("ON");
+            }
+            holder.putCircleColor(userHistory.newState);
+            DeviceAdapter.this.ref.child("devicesHistory").child(currentDevice.key).push().setValue(userHistory);
+
+        };
+
+        holder.bindToDevice(currentDevice, cardViewListener, powerButtonListener);
 
     }
 
@@ -76,7 +105,6 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
                 for (DataSnapshot userDeviceSnapshot : dataSnapshot.getChildren()) {
                     String key = userDeviceSnapshot.getKey();
 
-
                     Device newDevice = new Device();
 
                     String deviceName = userDeviceSnapshot.getChildren().iterator().next().getValue().toString();
@@ -84,13 +112,12 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
                     newDevice.name = deviceName;
                     newDevice.key = key;
 
-                    Log.i(TAG, deviceName);
-
                     DeviceAdapter.this.ref.child("Devices").child(key).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                             if (dataSnapshot.getValue() != null) {
+                                Log.i(TAG,dataSnapshot.toString());
 
                                 Device changedDevice = dataSnapshot.getValue(Device.class);
                                 int deviceIndex = deviceList.indexOf(changedDevice);

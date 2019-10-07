@@ -69,11 +69,11 @@ public class AddDevice extends AppCompatActivity {
         deviceInfo.put("key", key);
         deviceInfo.put("state", "OFF");
 
-        Map<String, String> userDevice = new HashMap<>();
-        userDevice.put("name", deviceName);
-        userDevice.put("key", key);
+//        Map<String, String> userDevice = new HashMap<>();
+//        userDevice.put("name", deviceName);
+//        userDevice.put("key", key);
 
-        reference.child("userDevices").child(user.getUid()).child(key).setValue(userDevice);
+        reference.child("userDevices").child(user.getUid()).child(key).child("name").setValue(deviceName);
 
         if (newDeviceRadio.isChecked()) {
             reference.child("Devices").child(key).setValue(deviceInfo).addOnSuccessListener(new OnSuccessListener<Void>() {
