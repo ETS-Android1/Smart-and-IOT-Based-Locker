@@ -14,6 +14,7 @@ import com.elsawy.ahmed.fingerprintiot.Activities.AddDevice;
 import com.elsawy.ahmed.fingerprintiot.Activities.LoginActivity;
 import com.elsawy.ahmed.fingerprintiot.Activities.SignupActivity;
 import com.elsawy.ahmed.fingerprintiot.Adapters.DeviceAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String TAG = "MainActivity";
     private RecyclerView devicesRecyclerView;
+    private FloatingActionButton addDeviceFab;
 
     private FirebaseAuth mAuth;
 
@@ -51,14 +53,13 @@ public class MainActivity extends AppCompatActivity {
         Button login = (Button) findViewById(R.id.login);
         login.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, LoginActivity.class)));
 
-        Button newDevice = (Button) findViewById(R.id.new_device);
-        newDevice.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddDevice.class)));
-
+        addDeviceFab = (FloatingActionButton) findViewById(R.id.add_device_fab);
+        addDeviceFab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddDevice.class)));
 
         DeviceAdapter deviceAdapter = new DeviceAdapter(MainActivity.this);
 
         devicesRecyclerView = findViewById(R.id.devices_recycler_view);
-//        devicesRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(10));
+        devicesRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(20));
         devicesRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         devicesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         devicesRecyclerView.setAdapter(deviceAdapter);

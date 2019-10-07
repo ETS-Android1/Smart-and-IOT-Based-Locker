@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/card_view_background"
+        >
+        <TextView
+            android:id="@+id/history_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textColor="@color/card_view_header_color"
+            android:textSize="20sp"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center_vertical"
+            android:text="username"
+            />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/history_changed_way"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/card_view_header_color"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:text="mobile"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+            <TextView
+                android:id="@+id/history_time"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/card_view_text_color"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:text="20:22 AM"
+                />
+
+            <TextView
+                android:id="@+id/history_date"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/card_view_text_color"
+                android:textSize="15sp"
+                android:text="22-9-2019"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/history_new_state"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="ON"
+            android:textColor="@color/colorPrimary"
+
+            />
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
