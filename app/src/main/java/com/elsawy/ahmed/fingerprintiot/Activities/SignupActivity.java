@@ -2,22 +2,21 @@ package com.elsawy.ahmed.fingerprintiot.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elsawy.ahmed.fingerprintiot.MainActivity;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,17 +32,17 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
     private FirebaseAuth mAuth;
 
-    //    private TextView backTV;
     private EditText nameET, emailET, passwordET, confirmPasswordET;
     private Button signupButton;
+    private Toolbar toolbar;
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        setupToolbar();
 
-//        backTV = (TextView) findViewById(R.id.back_sign_up);
         nameET = (EditText) findViewById(R.id.sign_up_name);
         emailET = (EditText) findViewById(R.id.sign_up_email);
         passwordET = (EditText) findViewById(R.id.sign_up_password);
@@ -54,6 +53,15 @@ public class SignupActivity extends AppCompatActivity {
 
         signupButton.setOnClickListener(view -> signup());
 
+    }
+
+
+    private void setupToolbar(){
+        toolbar = findViewById(R.id.sign_up_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_white_24dp);
+        getSupportActionBar().setTitle("");
     }
 
 
@@ -180,4 +188,13 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

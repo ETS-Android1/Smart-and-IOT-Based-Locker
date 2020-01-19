@@ -1,18 +1,16 @@
 <resources>
     <string name="app_name">FingerPrintIOT</string>
-
-    <string name="register_text"><u>Register</u></string>
-    <string name="login_text"><u>Login</u></string>
-    <string name="reset_password_text"><u>Reset Password</u></string>
+    <string name="login">Login</string>
     <string name="sign_up">Sign up</string>
-    <string name="name">Name</string>
+    <string name="login_text">welcome back! login to access the app.</string>
+    <string name="sign_up_text">Create an account to access all features.</string>
+    <string name="reset_password_text"><u>Reset Password</u></string>
+    <string name="fullname">full name</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="login">Login</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="don_t_have_an_account_register">Don\'t have an account? Register</string>
     <string name="send_email">Send Email</string>
-
 
 </resources>

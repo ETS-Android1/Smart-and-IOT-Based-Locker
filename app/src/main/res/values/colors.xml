@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#0075A5</color>
-    <color name="colorPrimaryDark">#005B7A</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#FF7F29</color>
+    <color name="colorPrimaryDark">#B65717</color>
+    <color name="colorAccent">#FF7F29</color>
 
     <color name="white">#FFFFFF</color>
     <color name="green">#72D72C</color>
@@ -13,7 +13,7 @@
     <color name="card_view_text_color">#817593</color>
 
 
-    <color name="editTextColor">#CDCDD9</color>
+    <color name="editTextColor">#232324</color>
     <color name="background">#162354</color>
 
     <color name="color1">#006A96</color>

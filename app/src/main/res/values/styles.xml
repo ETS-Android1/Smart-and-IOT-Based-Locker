@@ -12,6 +12,13 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+
+    <style name="rippleStyleGray">
+        <item name="mrl_rippleOverlay">true</item>              // if true, ripple is drawn in foreground; false - background
+        <item name="mrl_rippleColor">#181717</item>            // color of ripple
+        <item name="mrl_rippleAlpha">0.1</item>                 // alpha of ripple
+    </style>
+
     <style name="buttonStyle">
 <!--        <item name="android:background">@drawable/button_shape</item>-->
 <!--        <item name="android:fontFamily">@font/gotham</item>-->
@@ -25,20 +32,19 @@
     </style>
 
     <style name="editTextStyle">
-<!--        <item name="android:fontFamily">@font/calibri</item>-->
-        <item name="android:layout_marginTop">@dimen/login_sign_up_edit_text_margin_top</item>
+<!--        <item name="android:layout_marginTop">@dimen/login_sign_up_edit_text_margin_top</item>-->
         <item name="android:background">@drawable/edit_text_border</item>
         <item name="android:drawablePadding">10dp</item>
-        <item name="android:padding">8dp</item>
+        <item name="android:padding">5dp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/editTextColor</item>
-        <item name="android:textColorHint">@color/editTextColor</item>
         <item name="android:textSize">@dimen/login_sign_up_edit_text_text_size</item>
         <item name="android:singleLine">true</item>
     </style>
 
     <style name="TextLabel" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">18sp</item>
+        <item name="android:paddingBottom">15dp</item>
     </style>
 
     <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
@@ -46,7 +52,7 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/colorAccent</item>
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@android:color/white</item>
     </style>"
 
     <style name="AppTheme.FloatingActionButton" >
