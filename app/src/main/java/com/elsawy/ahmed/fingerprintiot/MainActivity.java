@@ -1,14 +1,26 @@
 package com.elsawy.ahmed.fingerprintiot;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.elsawy.ahmed.fingerprintiot.Activities.AddDevice;
 import com.elsawy.ahmed.fingerprintiot.Activities.LoginActivity;
@@ -24,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView devicesRecyclerView;
     private FloatingActionButton addDeviceFab;
 
+    private Toolbar toolbar;
     private FirebaseAuth mAuth;
-
 
     @Override
     public void onStart() {
@@ -47,13 +59,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button signup = (Button) findViewById(R.id.signup);
-        signup.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SignupActivity.class)));
+        setupToolbar();
 
-        Button login = (Button) findViewById(R.id.login);
-        login.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, LoginActivity.class)));
-
-        addDeviceFab = (FloatingActionButton) findViewById(R.id.add_device_fab);
+        addDeviceFab = findViewById(R.id.add_device_fab);
         addDeviceFab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddDevice.class)));
 
         DeviceAdapter deviceAdapter = new DeviceAdapter(MainActivity.this);
@@ -63,6 +71,33 @@ public class MainActivity extends AppCompatActivity {
         devicesRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         devicesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         devicesRecyclerView.setAdapter(deviceAdapter);
-
     }
+
+    private void setupToolbar() {
+        toolbar = findViewById(R.id.sign_up_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.add_device) {
+            startActivity(new Intent(MainActivity.this, AddDevice.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
 }

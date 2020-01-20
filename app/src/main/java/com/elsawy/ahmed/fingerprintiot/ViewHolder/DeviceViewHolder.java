@@ -15,16 +15,14 @@ public class DeviceViewHolder extends RecyclerView.ViewHolder {
 
     private TextView deviceNameTV,deviceStateTV;
     private ImageView devicePowerBtn;
-    private View deviceCicleView;
     private CardView deviceCardView;
 
     public DeviceViewHolder(@NonNull View itemView) {
         super(itemView);
-        deviceNameTV = (TextView) itemView.findViewById(R.id.device_name);
-        deviceStateTV = (TextView) itemView.findViewById(R.id.device_state);
-        devicePowerBtn = (ImageView) itemView.findViewById(R.id.device_power_btn);
-        deviceCicleView = (View) itemView.findViewById(R.id.device_circle);
-        deviceCardView = (CardView) itemView.findViewById(R.id.item_device_card_view);
+        deviceNameTV = itemView.findViewById(R.id.device_name);
+        deviceStateTV = itemView.findViewById(R.id.device_state);
+        devicePowerBtn = itemView.findViewById(R.id.device_power_btn);
+        deviceCardView = itemView.findViewById(R.id.item_device_card_view);
 
     }
 
@@ -35,15 +33,15 @@ public class DeviceViewHolder extends RecyclerView.ViewHolder {
         deviceCardView.setOnClickListener(cardViewListener);
         devicePowerBtn.setOnClickListener(powerButtonListener);
 //        deviceStateTV.setOnClickListener(powerButtonListener);
-        putCircleColor(currentDevice.state);
+        putPowerButtonColor(currentDevice.state);
 
     }
 
-    public void putCircleColor(String state){
+    public void putPowerButtonColor(String state){
         if (state.equals("ON")){
-            deviceCicleView.setBackgroundResource(R.drawable.green_circle);
+            devicePowerBtn.setImageResource(R.drawable.ic_power_orange_24dp);
         }else if(state.equals("OFF")){
-            deviceCicleView.setBackgroundResource(R.drawable.yellow_circle);
+            devicePowerBtn.setImageResource(R.drawable.ic_power_gray_24dp);
         }
     }
 

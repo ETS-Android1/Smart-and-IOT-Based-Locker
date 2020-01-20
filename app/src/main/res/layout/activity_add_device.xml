@@ -5,105 +5,150 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/colorPrimary"
+    android:background="@color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
     tools:context=".Activities.AddDevice">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/login_sign_up_padding">
+        android:orientation="vertical">
 
-
-        <com.google.android.material.textfield.TextInputLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/add_device_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/login_sign_up_edit_text_margin_top"
-            android:textColorHint="@color/colorAccent"
-            app:hintTextAppearance="@style/TextLabel" >
+            android:background="@color/colorPrimary"
+            android:elevation="4dp"
+            app:title="@string/add_device"
+            app:titleTextColor="@android:color/white"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/login_sign_up_padding">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="@string/device_name"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                />
 
             <EditText
                 android:id="@+id/device_name_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="device name"
+                android:hint="@string/device_name"
                 android:inputType="text"
                 style="@style/editTextStyle"
+                android:layout_marginBottom="5dp"
                 />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/login_sign_up_edit_text_margin_top"
-            android:textColorHint="@color/colorAccent"
-            app:hintTextAppearance="@style/TextLabel" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="@string/device_type"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                />
 
             <EditText
                 android:id="@+id/device_type_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="device type"
+                android:hint="@string/device_type"
                 android:inputType="text"
                 style="@style/editTextStyle"
+                android:layout_marginBottom="8dp"
                 />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton android:id="@+id/new_device_radio"
-                android:layout_width="wrap_content"
+            <RadioGroup
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="new device"
-                android:onClick="onNewDeviceRadioButtonClicked"
-                android:checked="true"
-                android:layout_marginEnd="20dp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp">
+
+                <RadioButton android:id="@+id/new_device_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_device"
+                    android:onClick="onNewDeviceRadioButtonClicked"
+                    android:checked="true"
+                    android:layout_marginEnd="20dp"
+                    />
+
+                <RadioButton android:id="@+id/exist_device_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onNewDeviceRadioButtonClicked"
+                    android:checked="false"
+                    android:text="@string/exist_device"/>
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="@string/device_key"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
                 />
-
-            <RadioButton android:id="@+id/exist_device_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onNewDeviceRadioButtonClicked"
-                android:checked="false"
-                android:text="exist device"/>
-        </RadioGroup>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:visibility="gone"
-            android:id="@+id/device_key_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/login_sign_up_edit_text_margin_top"
-            android:textColorHint="@color/colorAccent"
-            app:hintTextAppearance="@style/TextLabel" >
 
             <EditText
                 android:id="@+id/device_key"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="device key"
+                android:hint="@string/device_key"
                 android:inputType="text"
                 style="@style/editTextStyle"
+                android:layout_marginBottom="10dp"
                 />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="15dp"
+                >
+                <com.balysv.materialripple.MaterialRippleLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/rippleStyleGray"
+                    >
 
+                    <Button
+                        android:id="@+id/add_device_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_device"
+                        android:textSize="18sp"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/button_background"
+                        />
 
-        <Button
-            android:id="@+id/add_device_btn"
-            android:layout_width="@dimen/login_sign_up_button_layout_width"
-            android:layout_height="wrap_content"
-            android:text="add device"
-            style="@style/buttonStyle"
-            />
+                </com.balysv.materialripple.MaterialRippleLayout>
 
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
     </LinearLayout>
-
 
 </ScrollView>

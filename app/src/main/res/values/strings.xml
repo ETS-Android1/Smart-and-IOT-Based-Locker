@@ -12,5 +12,11 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="don_t_have_an_account_register">Don\'t have an account? Register</string>
     <string name="send_email">Send Email</string>
+    <string name="device_name">device name</string>
+    <string name="add_device">add device</string>
+    <string name="device_type">device type</string>
+    <string name="exist_device">exist device</string>
+    <string name="new_device">new device</string>
+    <string name="device_key">device key</string>
 
 </resources>

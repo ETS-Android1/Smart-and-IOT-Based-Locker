@@ -79,7 +79,7 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
                 userHistory.newState = "ON";
                 DeviceAdapter.this.ref.child("Devices").child(currentDevice.key).child("state").setValue("ON");
             }
-            holder.putCircleColor(userHistory.newState);
+            holder.putPowerButtonColor(userHistory.newState);
             DeviceAdapter.this.ref.child("devicesHistory").child(currentDevice.key).push().setValue(userHistory);
 
         };

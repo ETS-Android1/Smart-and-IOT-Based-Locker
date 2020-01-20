@@ -54,9 +54,9 @@
             android:textColor="@android:color/white"
             android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:shadowRadius="15"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="10"
             android:shadowColor="@android:color/darker_gray"
             />
 

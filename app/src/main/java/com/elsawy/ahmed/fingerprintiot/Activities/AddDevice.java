@@ -1,8 +1,11 @@
 package com.elsawy.ahmed.fingerprintiot.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,7 +13,6 @@ import android.widget.RadioButton;
 
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +27,6 @@ public class AddDevice extends AppCompatActivity {
     private EditText deviceNameET, deviceTypeET, deviceKeyET;
     private Button addDeviceBtn;
     private RadioButton newDeviceRadio, existDeviceRadio;
-    private TextInputLayout keyTextInputLayout;
 
     private FirebaseAuth mAuth;
 
@@ -33,19 +34,27 @@ public class AddDevice extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_device);
+        setupToolbar();
 
-        deviceNameET = (EditText) findViewById(R.id.device_name_et);
-        deviceTypeET = (EditText) findViewById(R.id.device_type_et);
-        deviceKeyET = (EditText) findViewById(R.id.device_key);
-        addDeviceBtn = (Button) findViewById(R.id.add_device_btn);
-        newDeviceRadio = (RadioButton) findViewById(R.id.new_device_radio);
-        existDeviceRadio = (RadioButton) findViewById(R.id.exist_device_radio);
-        keyTextInputLayout = (TextInputLayout) findViewById(R.id.device_key_layout);
+        deviceNameET =  findViewById(R.id.device_name_et);
+        deviceTypeET = findViewById(R.id.device_type_et);
+        deviceKeyET = findViewById(R.id.device_key);
+        addDeviceBtn = findViewById(R.id.add_device_btn);
+        newDeviceRadio = findViewById(R.id.new_device_radio);
+        existDeviceRadio = findViewById(R.id.exist_device_radio);
 
         mAuth = FirebaseAuth.getInstance();
 
         addDeviceBtn.setOnClickListener(view -> saveDeviceData());
 
+    }
+
+    private void setupToolbar(){
+        Toolbar toolbar = findViewById(R.id.add_device_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_white_24dp);
+//        getSupportActionBar().setTitle("");
     }
 
     private void saveDeviceData() {
@@ -92,13 +101,23 @@ public class AddDevice extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.new_device_radio:
                 if (checked)
-                    keyTextInputLayout.setVisibility(View.GONE);
+                    deviceKeyET.setVisibility(View.GONE);
                 break;
             case R.id.exist_device_radio:
                 if (checked)
-                    keyTextInputLayout.setVisibility(View.VISIBLE);
+                    deviceKeyET.setVisibility(View.VISIBLE);
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
