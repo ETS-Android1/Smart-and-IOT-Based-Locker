@@ -3,11 +3,16 @@ package com.elsawy.ahmed.fingerprintiot.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     private FirebaseAuth mAuth;
-
 
     private EditText emailET, passwordET;
     private Button loginButton;
@@ -47,13 +51,12 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(view -> login());
         registerTV.setOnClickListener(view -> openSignupActivity());
         forgotPasswordTV.setOnClickListener(view -> openForgotPasswordActivity());
-
-
     }
 
     private void openForgotPasswordActivity() {
-        Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+//        startActivity(intent);
+        showSendEmailCustomDialog();
     }
 
     private void openSignupActivity() {
@@ -121,14 +124,10 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
             if (task.isSuccessful()) {
-
                 Log.d(TAG, "signInWithEmail:success");
-
                 onLoginSuccess();
-
             } else {
                 Log.w(TAG, "signInWithEmail:failure", task.getException());
-
                 onLoginFailed();
             }
         }
@@ -149,6 +148,45 @@ public class LoginActivity extends AppCompatActivity {
             progressDialog.dismiss();
             progressDialog = null;
         }
+    }
+
+    private void showSendEmailCustomDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+        dialog.setContentView(R.layout.activity_forgot_password);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        dialog.setCancelable(false);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        final Button sendEmail = dialog.findViewById(R.id.send_email_button);
+
+        final EditText emailET = dialog.findViewById(R.id.forgot_password_email_et);
+
+        sendEmail.setOnClickListener(v -> {
+            String email = emailET.getText().toString();
+            sendEmail(email);
+
+            dialog.dismiss();
+        });
+
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
+    }
+
+    private void sendEmail(String emailAddress) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        auth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast toast = Toast.makeText(LoginActivity.this, "the email is sent", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                });
     }
 
 }
