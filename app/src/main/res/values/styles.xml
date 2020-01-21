@@ -55,8 +55,17 @@
     </style>"
 
     <style name="AppTheme.FloatingActionButton" >
-<!--        <item name="colorAccent">@color/colorPrimaryDark</item>-->
         <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="NavigationViewStyle">
+        <item name="android:textSize">@dimen/nav_view_text_size</item> <!-- menu item text size-->
+        <item name="android:listPreferredItemHeightSmall">@dimen/nav_view_item_height</item><!-- menu item height-->
+    </style>
+
+    <style name="myCustomMenuTextAppearance" parent="ThemeOverlay.AppCompat.Light">
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
     </style>
 
 </resources>

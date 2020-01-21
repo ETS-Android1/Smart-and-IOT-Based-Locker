@@ -18,5 +18,9 @@
     <string name="exist_device">exist device</string>
     <string name="new_device">new device</string>
     <string name="device_key">device key</string>
+    <string name="logout">logout</string>
+    <string name="username">username</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 </resources>

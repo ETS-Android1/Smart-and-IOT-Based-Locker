@@ -1,7 +1,11 @@
 package com.elsawy.ahmed.fingerprintiot;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,14 +31,17 @@ import com.elsawy.ahmed.fingerprintiot.Activities.LoginActivity;
 import com.elsawy.ahmed.fingerprintiot.Activities.SignupActivity;
 import com.elsawy.ahmed.fingerprintiot.Adapters.DeviceAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private String TAG = "MainActivity";
     private RecyclerView devicesRecyclerView;
     private FloatingActionButton addDeviceFab;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     private Toolbar toolbar;
     private FirebaseAuth mAuth;
@@ -59,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setupToolbar();
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigation_view);
 
         addDeviceFab = findViewById(R.id.add_device_fab);
         addDeviceFab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddDevice.class)));
@@ -71,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
         devicesRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         devicesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         devicesRecyclerView.setAdapter(deviceAdapter);
+
+        setupToolbar();
+        setupDrawerLayout();
+
     }
 
     private void setupToolbar() {
@@ -98,6 +111,30 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void setupDrawerLayout() {
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
+        navigationView.setNavigationItemSelectedListener(this);
+    }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_logout:
+                signup();
+                break;
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);  // close DrawerLayout after click buttons
+        return false;
+    }
+
+    private void signup() {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

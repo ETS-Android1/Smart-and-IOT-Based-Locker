@@ -118,6 +118,15 @@
                 android:layout_marginBottom="10dp"
                 />
 
+            <Button
+                android:id="@+id/add_device_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_background"
+                android:text="@string/add_device"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,19 +139,9 @@
                 >
                 <com.balysv.materialripple.MaterialRippleLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     style="@style/rippleStyleGray"
                     >
-
-                    <Button
-                        android:id="@+id/add_device_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/add_device"
-                        android:textSize="18sp"
-                        android:textColor="@android:color/white"
-                        android:background="@drawable/button_background"
-                        />
 
                 </com.balysv.materialripple.MaterialRippleLayout>
 
