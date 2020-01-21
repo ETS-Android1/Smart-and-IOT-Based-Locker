@@ -10,25 +10,15 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.elsawy.ahmed.fingerprintiot.Activities.AddDevice;
 import com.elsawy.ahmed.fingerprintiot.Activities.LoginActivity;
-import com.elsawy.ahmed.fingerprintiot.Activities.SignupActivity;
 import com.elsawy.ahmed.fingerprintiot.Adapters.DeviceAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
