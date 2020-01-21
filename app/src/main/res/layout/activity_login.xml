@@ -96,7 +96,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:text="@string/email"
-                    android:layout_marginTop="@dimen/login_sign_up_edit_text_margin_top"
+                    android:layout_marginTop="@dimen/login_sign_up_text_view_margin_top"
                     android:layout_marginBottom="5dp"
                     />
 
@@ -116,7 +116,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:text="@string/password"
-                    android:layout_marginTop="@dimen/login_sign_up_edit_text_margin_top"
+                    android:layout_marginTop="@dimen/login_sign_up_text_view_margin_top"
                     android:layout_marginBottom="5dp"
                     />
 
