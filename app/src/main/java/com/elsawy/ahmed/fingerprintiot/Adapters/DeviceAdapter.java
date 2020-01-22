@@ -68,19 +68,19 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
         View.OnClickListener powerButtonListener = view -> {
             UserHistory userHistory = new UserHistory();
             //TODO handle username
-            userHistory.username = "ahmed elsawy";
-            userHistory.timestamp = System.currentTimeMillis() / 1000;
-            userHistory.changedWay = "mobile";
+            userHistory.setUsername("ahmed elsawy");
+            userHistory.setTimestamp( System.currentTimeMillis() / 1000);
+            userHistory.setChangedWay("mobile");
 
-            if (currentDevice.state.equals("ON")) {
-                userHistory.newState = "OFF";
-                DeviceAdapter.this.ref.child("Devices").child(currentDevice.key).child("state").setValue("OFF");
-            } else if (currentDevice.state.equals("OFF")) {
-                userHistory.newState = "ON";
-                DeviceAdapter.this.ref.child("Devices").child(currentDevice.key).child("state").setValue("ON");
+            if (currentDevice.getState().equals("ON")) {
+                userHistory.setNewState("OFF");
+                DeviceAdapter.this.ref.child("Devices").child(currentDevice.getKey()).child("state").setValue("OFF");
+            } else if (currentDevice.getState().equals("OFF")) {
+                userHistory.setNewState("ON");
+                DeviceAdapter.this.ref.child("Devices").child(currentDevice.getKey()).child("state").setValue("ON");
             }
-            holder.putPowerButtonColor(userHistory.newState);
-            DeviceAdapter.this.ref.child("devicesHistory").child(currentDevice.key).push().setValue(userHistory);
+            holder.putPowerButtonColor(userHistory.getNewState());
+            DeviceAdapter.this.ref.child("devicesHistory").child(currentDevice.getKey()).push().setValue(userHistory);
 
         };
 
@@ -109,8 +109,8 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
 
                     String deviceName = userDeviceSnapshot.getChildren().iterator().next().getValue().toString();
 
-                    newDevice.name = deviceName;
-                    newDevice.key = key;
+                    newDevice.setName(deviceName);
+                    newDevice.setKey(key);
 
                     DeviceAdapter.this.ref.child("Devices").child(key).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -125,7 +125,7 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
                                     newDevice.setDevice(changedDevice);
                                     deviceList.add(newDevice);
                                 } else {
-                                    deviceList.get(deviceIndex).state = changedDevice.state;
+                                    deviceList.get(deviceIndex).setState(changedDevice.getState());
                                 }
                             }
                             DeviceAdapter.this.notifyDataSetChanged();

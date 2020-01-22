@@ -33,12 +33,12 @@ public class DeviceViewHolder extends RecyclerView.ViewHolder {
 
     public void bindToDevice(Device currentDevice, View.OnClickListener cardViewListener, View.OnClickListener powerButtonListener) {
 
-        deviceNameTV.setText(currentDevice.name);
-        deviceStateTV.setText("State : " + currentDevice.state);
+        deviceNameTV.setText(currentDevice.getName());
+        deviceStateTV.setText("State : " + currentDevice.getState());
         deviceCardView.setOnClickListener(cardViewListener);
         devicePowerBtn.setOnClickListener(powerButtonListener);
 //        deviceStateTV.setOnClickListener(powerButtonListener);
-        putPowerButtonColor(currentDevice.state);
+        putPowerButtonColor(currentDevice.getState());
 
     }
 

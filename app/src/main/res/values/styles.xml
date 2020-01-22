@@ -35,7 +35,10 @@
     <style name="editTextStyle">
         <item name="android:background">@drawable/edit_text_border</item>
         <item name="android:drawablePadding">10dp</item>
-        <item name="android:padding">6dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingStart">6dp</item>
+        <item name="android:paddingEnd">6dp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/editTextColor</item>
         <item name="android:textSize">@dimen/login_sign_up_edit_text_text_size</item>

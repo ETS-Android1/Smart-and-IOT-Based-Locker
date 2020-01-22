@@ -72,7 +72,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<UserHistoryViewHolder> 
 
                 for (DataSnapshot userHistorySnapshot : dataSnapshot.getChildren()) {
                     UserHistory currentUserHistory = userHistorySnapshot.getValue(UserHistory.class);
-                    Log.i(TAG,currentUserHistory.timestamp+currentUserHistory.newState+currentUserHistory.username+currentUserHistory.changedWay);
+                    Log.i(TAG,currentUserHistory.getTimestamp()+currentUserHistory.getNewState()+currentUserHistory.getUsername()+currentUserHistory.getChangedWay());
                     usersList.add(currentUserHistory);
                 }
             }

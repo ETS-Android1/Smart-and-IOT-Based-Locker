@@ -44,7 +44,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
         setDeviceInfo(currentDevice);
 
-        HistoryAdapter historyAdapter = new HistoryAdapter(DeviceDetailActivity.this,currentDevice.key);
+        HistoryAdapter historyAdapter = new HistoryAdapter(DeviceDetailActivity.this,currentDevice.getKey());
 
         usersRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(15));
         usersRecyclerView.setLayoutManager(new LinearLayoutManager(DeviceDetailActivity.this));
@@ -54,10 +54,10 @@ public class DeviceDetailActivity extends AppCompatActivity {
     }
 
     private void setDeviceInfo(Device currentDevice) {
-        stateTV.setText("State: " + currentDevice.state);
-        nameTV.setText(currentDevice.name);
-        keyTV.setText( "Key: " + currentDevice.key);
-        typeTV.setText("Type: " + currentDevice.type);
+        stateTV.setText("State: " + currentDevice.getState());
+        nameTV.setText(currentDevice.getName());
+        keyTV.setText( "Key: " + currentDevice.getKey());
+        typeTV.setText("Type: " + currentDevice.getType());
     }
 
     private void setupToolbar(){

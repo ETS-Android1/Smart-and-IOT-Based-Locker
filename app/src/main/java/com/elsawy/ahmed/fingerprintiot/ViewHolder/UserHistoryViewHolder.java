@@ -36,15 +36,15 @@ public class UserHistoryViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindToUserHistory(UserHistory currentUser) {
-        Date date = new Date(currentUser.timestamp);
+        Date date = new Date(currentUser.getTimestamp());
 //        Calendar calendar = newStateTV
         Log.i("Date", date.toString());
 
-        usernameTV.setText(currentUser.username);
-        newStateTV.setText(currentUser.newState);
-        timeTV.setText(Utilities.getTime(currentUser.timestamp));
-        dateTV.setText(Utilities.getDate(currentUser.timestamp));
-        putChangedWayImage(currentUser.changedWay);
+        usernameTV.setText(currentUser.getUsername());
+        newStateTV.setText(currentUser.getNewState());
+        timeTV.setText(Utilities.getTime(currentUser.getTimestamp()));
+        dateTV.setText(Utilities.getDate(currentUser.getTimestamp()));
+        putChangedWayImage(currentUser.getChangedWay());
     }
 
     private void putChangedWayImage(String changedWay) {
