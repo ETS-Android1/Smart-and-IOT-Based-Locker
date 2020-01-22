@@ -11,18 +11,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.elsawy.ahmed.fingerprintiot.Models.Device;
 import com.elsawy.ahmed.fingerprintiot.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DeviceViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView deviceNameTV,deviceStateTV;
-    private ImageView devicePowerBtn;
-    private CardView deviceCardView;
+    @BindView(R.id.device_name)
+    TextView deviceNameTV;
+    @BindView(R.id.device_state)
+    TextView deviceStateTV;
+    @BindView(R.id.device_power_btn)
+    ImageView devicePowerBtn;
+    @BindView(R.id.item_device_card_view)
+    CardView deviceCardView;
 
     public DeviceViewHolder(@NonNull View itemView) {
         super(itemView);
-        deviceNameTV = itemView.findViewById(R.id.device_name);
-        deviceStateTV = itemView.findViewById(R.id.device_state);
-        devicePowerBtn = itemView.findViewById(R.id.device_power_btn);
-        deviceCardView = itemView.findViewById(R.id.item_device_card_view);
+        ButterKnife.bind(this, itemView);
 
     }
 

@@ -21,12 +21,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class AddDevice extends AppCompatActivity {
 
-
-    private EditText deviceNameET, deviceTypeET, deviceKeyET;
-    private Button addDeviceBtn;
-    private RadioButton newDeviceRadio, existDeviceRadio;
+    @BindView(R.id.device_name_et)
+    EditText deviceNameET;
+    @BindView(R.id.device_type_et)
+    EditText deviceTypeET;
+    @BindView(R.id.device_key)
+    EditText deviceKeyET;
+    @BindView(R.id.add_device_btn)
+    Button addDeviceBtn;
+    @BindView(R.id.new_device_radio)
+    RadioButton newDeviceRadio;
+    @BindView(R.id.exist_device_radio)
+    RadioButton existDeviceRadio;
 
     private FirebaseAuth mAuth;
 
@@ -34,14 +45,9 @@ public class AddDevice extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_device);
-        setupToolbar();
 
-        deviceNameET =  findViewById(R.id.device_name_et);
-        deviceTypeET = findViewById(R.id.device_type_et);
-        deviceKeyET = findViewById(R.id.device_key);
-        addDeviceBtn = findViewById(R.id.add_device_btn);
-        newDeviceRadio = findViewById(R.id.new_device_radio);
-        existDeviceRadio = findViewById(R.id.exist_device_radio);
+        ButterKnife.bind(this);
+        setupToolbar();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -54,7 +60,6 @@ public class AddDevice extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_white_24dp);
-//        getSupportActionBar().setTitle("");
     }
 
     private void saveDeviceData() {

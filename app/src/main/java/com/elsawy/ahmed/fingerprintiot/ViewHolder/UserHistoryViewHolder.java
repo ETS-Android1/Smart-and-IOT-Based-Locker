@@ -14,19 +14,25 @@ import com.elsawy.ahmed.fingerprintiot.Utilities;
 
 import java.util.Date;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class UserHistoryViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView usernameTV, newStateTV, timeTV, dateTV;
-    private ImageView historyChangedWayImage;
+    @BindView(R.id.history_username)
+    TextView usernameTV;
+    @BindView(R.id.history_new_state)
+    TextView newStateTV;
+    @BindView(R.id.history_time)
+    TextView timeTV;
+    @BindView(R.id.history_date)
+    TextView dateTV;
+    @BindView(R.id.history_image)
+    ImageView historyChangedWayImage;
 
     public UserHistoryViewHolder(@NonNull View itemView) {
         super(itemView);
-
-        usernameTV = (TextView) itemView.findViewById(R.id.history_username);
-        newStateTV = (TextView) itemView.findViewById(R.id.history_new_state);
-        timeTV = (TextView) itemView.findViewById(R.id.history_time);
-        dateTV = (TextView) itemView.findViewById(R.id.history_date);
-        historyChangedWayImage = (ImageView) itemView.findViewById(R.id.history_image);
+        ButterKnife.bind(this, itemView);
     }
 
     public void bindToUserHistory(UserHistory currentUser) {

@@ -10,18 +10,21 @@ import android.widget.Toast;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ForgotPasswordActivity extends AppCompatActivity {
 
-    private EditText emailET;
-    private Button sendEmailBtn;
+    @BindView(R.id.forgot_password_email_et)
+     EditText emailET;
+    @BindView(R.id.send_email_button)
+     Button sendEmailBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
-
-        emailET = (EditText) findViewById(R.id.forgot_password_email_et);
-        sendEmailBtn = (Button) findViewById(R.id.send_email_button);
+        ButterKnife.bind(this);
 
         sendEmailBtn.setOnClickListener(view -> {
             sendEmailBtn.setEnabled(false);

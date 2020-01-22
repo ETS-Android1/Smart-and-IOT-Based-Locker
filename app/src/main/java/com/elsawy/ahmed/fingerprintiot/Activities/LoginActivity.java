@@ -25,26 +25,31 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     private FirebaseAuth mAuth;
 
-    private EditText emailET, passwordET;
-    private Button loginButton;
-    private TextView forgotPasswordTV, registerTV;
+    @BindView(R.id.login_email)
+    EditText emailET;
+    @BindView(R.id.login_password)
+    EditText passwordET;
+    @BindView(R.id.login_button)
+    Button loginButton;
+    @BindView(R.id.forgot_password_tv)
+    TextView forgotPasswordTV;
+    @BindView(R.id.login_register_tv)
+    TextView registerTV;
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        emailET = findViewById(R.id.login_email);
-        passwordET = findViewById(R.id.login_password);
-        loginButton = findViewById(R.id.login_button);
-        forgotPasswordTV = findViewById(R.id.forgot_password_tv);
-        registerTV = findViewById(R.id.login_register_tv);
+        ButterKnife.bind(this);
 
         this.mAuth = FirebaseAuth.getInstance();
 

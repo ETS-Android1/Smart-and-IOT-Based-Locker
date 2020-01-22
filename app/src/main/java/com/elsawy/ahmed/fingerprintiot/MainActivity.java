@@ -25,15 +25,24 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private String TAG = "MainActivity";
-    private RecyclerView devicesRecyclerView;
-    private FloatingActionButton addDeviceFab;
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
 
-    private Toolbar toolbar;
+    @BindView(R.id.devices_recycler_view)
+    RecyclerView devicesRecyclerView;
+    @BindView(R.id.add_device_fab)
+    FloatingActionButton addDeviceFab;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+    @BindView(R.id.navigation_view)
+    NavigationView navigationView;
+    @BindView(R.id.sign_up_toolbar)
+    Toolbar toolbar;
+
     private FirebaseAuth mAuth;
 
     @Override
@@ -55,17 +64,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navigation_view);
-
-        addDeviceFab = findViewById(R.id.add_device_fab);
         addDeviceFab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddDevice.class)));
 
         DeviceAdapter deviceAdapter = new DeviceAdapter(MainActivity.this);
 
-        devicesRecyclerView = findViewById(R.id.devices_recycler_view);
         devicesRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(20));
         devicesRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         devicesRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -77,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setupToolbar() {
-        toolbar = findViewById(R.id.sign_up_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
     }
@@ -127,4 +130,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         finish();
     }
+
 }

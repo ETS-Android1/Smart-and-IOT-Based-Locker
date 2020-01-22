@@ -27,27 +27,35 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SignupActivity extends AppCompatActivity {
 
     private static final String TAG = "SignupActivity";
     private FirebaseAuth mAuth;
 
-    private EditText nameET, emailET, passwordET, confirmPasswordET;
-    private Button signupButton;
-    private Toolbar toolbar;
+    @BindView(R.id.sign_up_name)
+    EditText nameET;
+    @BindView(R.id.sign_up_email)
+    EditText emailET;
+    @BindView(R.id.sign_up_password)
+    EditText passwordET;
+    @BindView(R.id.sign_up_confirm_password)
+    EditText confirmPasswordET;
+    @BindView(R.id.sign_up_btn)
+    Button signupButton;
+    @BindView(R.id.sign_up_toolbar)
+    Toolbar toolbar;
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        setupToolbar();
 
-        nameET = findViewById(R.id.sign_up_name);
-        emailET = findViewById(R.id.sign_up_email);
-        passwordET = findViewById(R.id.sign_up_password);
-        confirmPasswordET = findViewById(R.id.sign_up_confirm_password);
-        signupButton = findViewById(R.id.sign_up_btn);
+        ButterKnife.bind(this);
+        setupToolbar();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -55,15 +63,12 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-
     private void setupToolbar(){
-        toolbar = findViewById(R.id.sign_up_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_white_24dp);
         getSupportActionBar().setTitle("");
     }
-
 
     private void signup() {
         Log.d(TAG, "Signup");
