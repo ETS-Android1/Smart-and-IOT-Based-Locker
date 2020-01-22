@@ -36,9 +36,9 @@ public class AddDevice extends AppCompatActivity {
     @BindView(R.id.device_phone_et)
     EditText devicePhoneET;
     @BindView(R.id.device_key_tv)
-    TextView  deviceKeyTV;
+    TextView deviceKeyTV;
     @BindView(R.id.device_phone_tv)
-    TextView  devicePhoneTV;
+    TextView devicePhoneTV;
     @BindView(R.id.add_device_btn)
     Button addDeviceBtn;
     @BindView(R.id.new_device_radio)
@@ -58,22 +58,40 @@ public class AddDevice extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        addDeviceBtn.setOnClickListener(view -> saveDeviceData());
+        addDeviceBtn.setOnClickListener(view -> {
+
+            String deviceName = deviceNameET.getText().toString();
+            String deviceType = deviceTypeET.getText().toString();
+            String devicePhone = devicePhoneET.getText().toString();
+
+            if (isValid(deviceName, devicePhone))
+                saveDeviceData(deviceName, deviceType, devicePhone);
+        });
 
     }
 
-    private void setupToolbar(){
+    private boolean isValid(String deviceName, String devicePhone) {
+        boolean valid = true;
+        if (deviceName.length() <= 0) {
+            deviceNameET.setError("required");
+            valid = false;
+        }
+
+        if (devicePhone.length() != 11) {
+            devicePhoneET.setError("enter a valid phone");
+            valid = false;
+        }
+        return valid;
+    }
+
+    private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.add_device_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_white_24dp);
     }
 
-    private void saveDeviceData() {
-
-        String deviceName = deviceNameET.getText().toString();
-        String deviceType = deviceTypeET.getText().toString();
-        String devicePhone = devicePhoneET.getText().toString();
+    private void saveDeviceData(String deviceName, String deviceType, String devicePhone) {
 
         FirebaseUser user = AddDevice.this.mAuth.getCurrentUser();
 
@@ -100,7 +118,7 @@ public class AddDevice extends AppCompatActivity {
                     finish();
                 }
             });
-        }else{
+        } else {
             finish();
         }
 
@@ -131,7 +149,7 @@ public class AddDevice extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 break;
