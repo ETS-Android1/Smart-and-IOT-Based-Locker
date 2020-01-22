@@ -1,88 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="70dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    app:cardCornerRadius="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="@color/card_view_background"
+        android:background="@android:color/white"
         >
-        <TextView
-            android:id="@+id/history_username"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:textColor="@color/card_view_header_color"
-            android:textSize="20sp"
-            android:layout_marginStart="10dp"
+
+        <ImageView
+            android:id="@+id/history_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_vertical"
-            android:text="username"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_phone"
             />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"
+            android:layout_weight="3"
             android:orientation="vertical"
-            android:gravity="center"
-            >
-            <TextView
-                android:id="@+id/history_time"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:textColor="@color/card_view_text_color"
-                android:textSize="15sp"
-                android:gravity="center"
-                android:text="20:22 AM"
-                />
+            android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/history_date"
+                android:id="@+id/history_username"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/card_view_text_color"
-                android:textSize="15sp"
-                android:text="22-9-2019"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="2dp"
+                android:layout_gravity="center_vertical"
+                android:text="username"
                 />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="10dp"
+                >
+                <TextView
+                    android:id="@+id/history_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/tab_indicator_text"
+                    android:textSize="15sp"
+                    android:text="20:22 AM"
+                    android:layout_marginEnd="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/history_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/card_view_text_color"
+                    android:textSize="15sp"
+                    android:text="22-9-2019"
+                    />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            >
             <TextView
                 android:id="@+id/history_new_state"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="ON"
                 android:textSize="20sp"
                 android:textColor="@color/colorPrimary"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
                 />
 
-            <TextView
-                android:id="@+id/history_changed_way"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:textColor="@color/card_view_header_color"
-                android:textSize="20sp"
-                android:gravity="center"
-                />
-<!--            android:text="mobile"-->
-
-        </LinearLayout>
     </LinearLayout>
 
 

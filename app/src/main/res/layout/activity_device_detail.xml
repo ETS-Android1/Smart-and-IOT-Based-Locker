@@ -1,90 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray"
     tools:context=".Activities.DeviceDetailActivity">
 
-
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:orientation="vertical"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/device_detail_name"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:text="device one"
-            />
+            android:background="@drawable/bottom_radius"
+            android:orientation="vertical"
+            android:paddingBottom="25dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/device_detail_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                />
+
+            <TextView
+                android:id="@+id/device_detail_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                android:text="device one"
+                />
+
+            <TextView
+                android:id="@+id/device_detail_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="20dp"
+                android:text="Key: **********"
+                />
+            <TextView
+                android:id="@+id/device_detail_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                android:text="State: off"
+                />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/device_detail_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                android:text="Type: door"
+                />
+
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/device_detail_state"
+            android:id="@+id/device_detail_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:layout_marginTop="5dp"
-            android:text="State: off"
+            android:text="History: "
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:padding="10dp"
             />
 
-        <TextView
-            android:id="@+id/device_detail_type"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/users_history_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:layout_marginTop="5dp"
-            android:text="Type: door"
-            />
-
-        <TextView
-            android:id="@+id/device_detail_key"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="Key: **********"
-            />
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            tools:listitem="@layout/item_user_history"/>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/device_detail_history"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/power_fab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="History: "
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp"
-        android:padding="10dp"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_marginEnd="30dp"
+        app:backgroundTint="@android:color/black"
+        app:layout_anchor="@id/linearLayout"
+        app:srcCompat="@drawable/ic_power_white_24dp"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:fabSize="normal"/>
 
-        app:layout_constraintTop_toBottomOf="@id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/users_history_recycler_view"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/message_fab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"
-        android:layout_margin="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/device_detail_history" />
+        app:layout_anchorGravity="bottom|end"
+        android:layout_marginEnd="100dp"
+        app:backgroundTint="@android:color/black"
+        app:layout_anchor="@id/linearLayout"
+        app:srcCompat="@android:drawable/ic_dialog_email"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:fabSize="normal"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
