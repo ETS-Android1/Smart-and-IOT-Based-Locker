@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,8 +31,14 @@ public class AddDevice extends AppCompatActivity {
     EditText deviceNameET;
     @BindView(R.id.device_type_et)
     EditText deviceTypeET;
-    @BindView(R.id.device_key)
+    @BindView(R.id.device_key_et)
     EditText deviceKeyET;
+    @BindView(R.id.device_phone_et)
+    EditText devicePhoneET;
+    @BindView(R.id.device_key_tv)
+    TextView  deviceKeyTV;
+    @BindView(R.id.device_phone_tv)
+    TextView  devicePhoneTV;
     @BindView(R.id.add_device_btn)
     Button addDeviceBtn;
     @BindView(R.id.new_device_radio)
@@ -66,6 +73,7 @@ public class AddDevice extends AppCompatActivity {
 
         String deviceName = deviceNameET.getText().toString();
         String deviceType = deviceTypeET.getText().toString();
+        String devicePhone = devicePhoneET.getText().toString();
 
         FirebaseUser user = AddDevice.this.mAuth.getCurrentUser();
 
@@ -78,14 +86,10 @@ public class AddDevice extends AppCompatActivity {
         }
 
         Map<String, String> deviceInfo = new HashMap<>();
-//        deviceInfo.put("name", name);
         deviceInfo.put("type", deviceType);
+        deviceInfo.put("phone", devicePhone);
         deviceInfo.put("key", key);
         deviceInfo.put("state", "OFF");
-
-//        Map<String, String> userDevice = new HashMap<>();
-//        userDevice.put("name", deviceName);
-//        userDevice.put("key", key);
 
         reference.child("userDevices").child(user.getUid()).child(key).child("name").setValue(deviceName);
 
@@ -96,6 +100,8 @@ public class AddDevice extends AppCompatActivity {
                     finish();
                 }
             });
+        }else{
+            finish();
         }
 
     }
@@ -105,12 +111,20 @@ public class AddDevice extends AppCompatActivity {
 
         switch (view.getId()) {
             case R.id.new_device_radio:
-                if (checked)
+                if (checked) {
                     deviceKeyET.setVisibility(View.GONE);
+                    deviceKeyTV.setVisibility(View.GONE);
+                    devicePhoneET.setVisibility(View.VISIBLE);
+                    devicePhoneTV.setVisibility(View.VISIBLE);
+                }
                 break;
             case R.id.exist_device_radio:
-                if (checked)
+                if (checked) {
                     deviceKeyET.setVisibility(View.VISIBLE);
+                    deviceKeyTV.setVisibility(View.VISIBLE);
+                    devicePhoneET.setVisibility(View.GONE);
+                    devicePhoneTV.setVisibility(View.GONE);
+                }
                 break;
         }
     }
