@@ -11,7 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elsawy.ahmed.fingerprintiot.Activities.DeviceDetailActivity;
+import com.elsawy.ahmed.fingerprintiot.MainActivity;
 import com.elsawy.ahmed.fingerprintiot.Models.Device;
+import com.elsawy.ahmed.fingerprintiot.Models.RecyclerViewCount;
 import com.elsawy.ahmed.fingerprintiot.Models.UserHistory;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.elsawy.ahmed.fingerprintiot.ViewHolder.DeviceViewHolder;
@@ -34,10 +36,12 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
     private FirebaseUser userData;
     private DatabaseReference ref;
     private ArrayList<Device> deviceList;
+    private RecyclerViewCount recyclerViewCount;
 
-
-    public DeviceAdapter(Context mContext) {
+    public DeviceAdapter(Context mContext, RecyclerViewCount recyclerViewCount) {
         this.mContext = mContext;
+        this.recyclerViewCount = recyclerViewCount;
+
         mAuth = FirebaseAuth.getInstance();
         userData = this.mAuth.getCurrentUser();
         ref = FirebaseDatabase.getInstance().getReference();
@@ -69,7 +73,7 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
             UserHistory userHistory = new UserHistory();
             //TODO handle username
             userHistory.setUsername("ahmed elsawy");
-            userHistory.setTimestamp( System.currentTimeMillis() / 1000);
+            userHistory.setTimestamp(System.currentTimeMillis() / 1000);
             userHistory.setChangedWay("mobile");
 
             if (currentDevice.getState().equals("ON")) {
@@ -117,7 +121,7 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                             if (dataSnapshot.getValue() != null) {
-                                Log.i(TAG,dataSnapshot.toString());
+                                Log.i(TAG, dataSnapshot.toString());
 
                                 Device changedDevice = dataSnapshot.getValue(Device.class);
                                 int deviceIndex = deviceList.indexOf(changedDevice);
@@ -129,7 +133,7 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
                                 }
                             }
                             DeviceAdapter.this.notifyDataSetChanged();
-
+                            recyclerViewCount.setRecyclerViewCount(deviceList.size());
                         }
 
                         @Override
@@ -139,7 +143,6 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
                     });
                 }
             }
-//            DeviceAdapter.this.notifyDataSetChanged();
         }
 
         @Override
@@ -148,4 +151,6 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
         }
 
     }
+
 }
+

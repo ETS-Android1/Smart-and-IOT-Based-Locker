@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.elsawy.ahmed.fingerprintiot.Activities.AddDevice;
 import com.elsawy.ahmed.fingerprintiot.Activities.LoginActivity;
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     @BindView(R.id.sign_up_toolbar)
     Toolbar toolbar;
+    @BindView(R.id.main_activity_background)
+    ImageView imageViewBackground;
 
     private FirebaseAuth mAuth;
 
@@ -68,7 +72,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         addDeviceFab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddDevice.class)));
 
-        DeviceAdapter deviceAdapter = new DeviceAdapter(MainActivity.this);
+        DeviceAdapter deviceAdapter = new DeviceAdapter(MainActivity.this, count -> {
+            if (count > 0) {
+                imageViewBackground.setVisibility(View.GONE);
+            } else {
+                imageViewBackground.setVisibility(View.VISIBLE);
+            }
+        });
 
         devicesRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(20));
         devicesRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));

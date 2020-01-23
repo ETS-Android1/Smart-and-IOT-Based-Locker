@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.elsawy.ahmed.fingerprintiot.Models.RecyclerViewCount;
 import com.elsawy.ahmed.fingerprintiot.Models.UserHistory;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.elsawy.ahmed.fingerprintiot.ViewHolder.UserHistoryViewHolder;
@@ -24,15 +25,17 @@ import java.util.ArrayList;
 public class HistoryAdapter extends RecyclerView.Adapter<UserHistoryViewHolder> {
 
     private String TAG = "HistoryAdapter";
-    private Context mContext;
+    private RecyclerViewCount recyclerViewCount;
+
 
     private FirebaseAuth mAuth;
     private FirebaseUser userData;
     private DatabaseReference ref;
     private ArrayList<UserHistory> usersList;
 
-    public HistoryAdapter(Context mContext,String deviceKey) {
-        this.mContext = mContext;
+    public HistoryAdapter(String deviceKey, RecyclerViewCount recyclerViewCount) {
+        this.recyclerViewCount = recyclerViewCount;
+
         mAuth = FirebaseAuth.getInstance();
         userData = this.mAuth.getCurrentUser();
         ref = FirebaseDatabase.getInstance().getReference();
@@ -76,8 +79,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<UserHistoryViewHolder> 
                     usersList.add(currentUserHistory);
                 }
             }
-
             HistoryAdapter.this.notifyDataSetChanged();
+            recyclerViewCount.setRecyclerViewCount(usersList.size());
         }
 
         @Override

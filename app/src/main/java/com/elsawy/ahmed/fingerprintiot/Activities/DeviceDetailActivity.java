@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.elsawy.ahmed.fingerprintiot.Adapters.HistoryAdapter;
@@ -31,6 +33,8 @@ public class DeviceDetailActivity extends AppCompatActivity {
     TextView keyTV;
     @BindView(R.id.users_history_recycler_view)
     RecyclerView usersRecyclerView;
+    @BindView(R.id.history_image_view_background)
+    ImageView historyImageViewBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,13 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
         setDeviceInfo(currentDevice);
 
-        HistoryAdapter historyAdapter = new HistoryAdapter(DeviceDetailActivity.this,currentDevice.getKey());
+        HistoryAdapter historyAdapter = new HistoryAdapter(currentDevice.getKey(), count -> {
+            if (count > 0) {
+                historyImageViewBackground.setVisibility(View.GONE);
+            } else {
+                historyImageViewBackground.setVisibility(View.VISIBLE);
+            }
+        });
 
         usersRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(15));
         usersRecyclerView.setLayoutManager(new LinearLayoutManager(DeviceDetailActivity.this));

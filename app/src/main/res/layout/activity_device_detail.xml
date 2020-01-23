@@ -87,15 +87,27 @@
             android:padding="10dp"
             />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/users_history_recycler_view"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:scrollbars="vertical"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            tools:listitem="@layout/item_user_history"/>
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/history_image_view_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="40dp"
+                android:src="@drawable/ic_door"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/users_history_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:scrollbars="vertical"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                tools:listitem="@layout/item_user_history"/>
+        </RelativeLayout>
 
     </LinearLayout>
 
