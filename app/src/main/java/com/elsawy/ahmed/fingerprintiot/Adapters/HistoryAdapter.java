@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HistoryAdapter extends RecyclerView.Adapter<UserHistoryViewHolder> {
 
@@ -42,7 +43,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<UserHistoryViewHolder> 
         usersList = new ArrayList<>();
 
         if (this.userData != null) {
-            HistoryAdapter.this.ref.child("devicesHistory").child(deviceKey).addValueEventListener(new UserHistoryListener());
+            HistoryAdapter.this.ref.child("devicesHistory").child(deviceKey).orderByChild("timestamp").limitToLast(15).addValueEventListener(new UserHistoryListener());
             HistoryAdapter.this.ref.child("devicesHistory").child(deviceKey).keepSynced(true);
         }
     }
@@ -78,6 +79,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<UserHistoryViewHolder> 
                     Log.i(TAG,currentUserHistory.getTimestamp()+currentUserHistory.getNewState()+currentUserHistory.getUsername()+currentUserHistory.getChangedWay());
                     usersList.add(currentUserHistory);
                 }
+                Collections.reverse(usersList); // reverse list to show last change state first
             }
             HistoryAdapter.this.notifyDataSetChanged();
             recyclerViewCount.setRecyclerViewCount(usersList.size());
