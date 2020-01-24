@@ -12,16 +12,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.elsawy.ahmed.fingerprintiot.Adapters.DeviceAdapter;
 import com.elsawy.ahmed.fingerprintiot.Adapters.HistoryAdapter;
 import com.elsawy.ahmed.fingerprintiot.Models.Device;
+import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
+import com.elsawy.ahmed.fingerprintiot.Models.UserHistory;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.elsawy.ahmed.fingerprintiot.VerticalSpaceItemDecoration;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DeviceDetailActivity extends AppCompatActivity {
+
+    private Device currentDevice;
 
     @BindView(R.id.device_detail_state)
     TextView stateTV;
@@ -35,6 +44,8 @@ public class DeviceDetailActivity extends AppCompatActivity {
     RecyclerView usersRecyclerView;
     @BindView(R.id.history_image_view_background)
     ImageView historyImageViewBackground;
+    @BindView(R.id.device_detail_toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +55,21 @@ public class DeviceDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setupToolbar();
 
-        Device currentDevice = (Device) getIntent().getParcelableExtra("deviceInfo");
-
+        currentDevice = (Device) getIntent().getParcelableExtra("deviceInfo");
         setDeviceInfo(currentDevice);
+        setupRecyclerView(currentDevice.getKey());
 
-        HistoryAdapter historyAdapter = new HistoryAdapter(currentDevice.getKey(), count -> {
+    }
+
+    private void setDeviceInfo(Device currentDevice) {
+        stateTV.setText("State: " + currentDevice.getState());
+        nameTV.setText(currentDevice.getName());
+        keyTV.setText( "Key: " + currentDevice.getKey());
+        typeTV.setText("Type: " + currentDevice.getType());
+    }
+
+    private void setupRecyclerView(String key){
+        HistoryAdapter historyAdapter = new HistoryAdapter(key, count -> {
             if (count > 0) {
                 historyImageViewBackground.setVisibility(View.GONE);
             } else {
@@ -60,18 +81,9 @@ public class DeviceDetailActivity extends AppCompatActivity {
         usersRecyclerView.setLayoutManager(new LinearLayoutManager(DeviceDetailActivity.this));
         usersRecyclerView.setItemAnimator(new DefaultItemAnimator());
         usersRecyclerView.setAdapter(historyAdapter);
-
-    }
-
-    private void setDeviceInfo(Device currentDevice) {
-        stateTV.setText("State: " + currentDevice.getState());
-        nameTV.setText(currentDevice.getName());
-        keyTV.setText( "Key: " + currentDevice.getKey());
-        typeTV.setText("Type: " + currentDevice.getType());
     }
 
     private void setupToolbar(){
-        Toolbar toolbar = findViewById(R.id.device_detail_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_white_24dp);
@@ -86,6 +98,33 @@ public class DeviceDetailActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.message_fab)
+    public void handleMessageBtn(){
+        Toast.makeText(this,"handleMessageBtn",Toast.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.power_fab)
+    public void handlePowerBtn(){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        UserHistory userHistory = new UserHistory();
+
+        userHistory.setUsername(SharedPrefManager.getInstance(this).getUsername());
+        userHistory.setTimestamp(System.currentTimeMillis() / 1000);
+        userHistory.setChangedWay("mobile");
+
+        if (currentDevice.getState().equals("ON")) {
+            userHistory.setNewState("OFF");
+            ref.child("Devices").child(currentDevice.getKey()).child("state").setValue("OFF");
+            currentDevice.setState("OFF");
+        } else if (currentDevice.getState().equals("OFF")) {
+            userHistory.setNewState("ON");
+            ref.child("Devices").child(currentDevice.getKey()).child("state").setValue("ON");
+            currentDevice.setState("ON");
+        }
+        ref.child("devicesHistory").child(currentDevice.getKey()).push().setValue(userHistory);
+        stateTV.setText("State: " + currentDevice.getState());
     }
 
 }
