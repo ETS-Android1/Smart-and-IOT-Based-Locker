@@ -106,7 +106,7 @@ public class AddDevice extends AppCompatActivity {
 
         Map<String, String> deviceInfo = new HashMap<>();
         deviceInfo.put("type", deviceType);
-        deviceInfo.put("phone", devicePhone);
+        deviceInfo.put("phoneNumber", devicePhone);
         deviceInfo.put("key", key);
         deviceInfo.put("state", "OFF");
 

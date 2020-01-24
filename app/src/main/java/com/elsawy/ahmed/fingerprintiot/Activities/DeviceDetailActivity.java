@@ -7,14 +7,21 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.elsawy.ahmed.fingerprintiot.Adapters.DeviceAdapter;
 import com.elsawy.ahmed.fingerprintiot.Adapters.HistoryAdapter;
 import com.elsawy.ahmed.fingerprintiot.Models.Device;
 import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
@@ -102,7 +109,25 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.message_fab)
     public void handleMessageBtn(){
-        Toast.makeText(this,"handleMessageBtn",Toast.LENGTH_LONG).show();
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+        dialog.setContentView(R.layout.send_sms_dialogs);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        dialog.setCancelable(false);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        final Button onBtn = dialog.findViewById(R.id.on_sms_btn);
+        final Button offBtn = dialog.findViewById(R.id.off_sms_btn);
+
+        onBtn.setOnClickListener(v -> {sendSMS("ON");dialog.dismiss();});
+        offBtn.setOnClickListener(v -> {sendSMS("OFF");dialog.dismiss();});
+
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
     }
 
     @OnClick(R.id.power_fab)
@@ -125,6 +150,12 @@ public class DeviceDetailActivity extends AppCompatActivity {
         }
         ref.child("devicesHistory").child(currentDevice.getKey()).push().setValue(userHistory);
         stateTV.setText("State: " + currentDevice.getState());
+    }
+
+    private void sendSMS(String message) {
+        SmsManager smgr = SmsManager.getDefault();
+        smgr.sendTextMessage(currentDevice.getPhoneNumber(), null, message, null, null);
+        Log.i("Finished sending SMS...", "");
     }
 
 }

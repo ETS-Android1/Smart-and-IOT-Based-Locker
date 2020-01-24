@@ -15,6 +15,40 @@ public class Device implements Parcelable {
     public Device() {
     }
 
+    protected Device(Parcel in) {
+        key = in.readString();
+        name = in.readString();
+        type = in.readString();
+        phoneNumber = in.readString();
+        state = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(key);
+        dest.writeString(name);
+        dest.writeString(type);
+        dest.writeString(phoneNumber);
+        dest.writeString(state);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Device> CREATOR = new Creator<Device>() {
+        @Override
+        public Device createFromParcel(Parcel in) {
+            return new Device(in);
+        }
+
+        @Override
+        public Device[] newArray(int size) {
+            return new Device[size];
+        }
+    };
+
     public String getKey() {
         return key;
     }
@@ -55,29 +89,11 @@ public class Device implements Parcelable {
         this.state = state;
     }
 
-    protected Device(Parcel in) {
-        key = in.readString();
-        name = in.readString();
-        type = in.readString();
-        state = in.readString();
-    }
-
-    public static final Creator<Device> CREATOR = new Creator<Device>() {
-        @Override
-        public Device createFromParcel(Parcel in) {
-            return new Device(in);
-        }
-
-        @Override
-        public Device[] newArray(int size) {
-            return new Device[size];
-        }
-    };
-
     public void setDevice(Device device){
         this.state = device.state;
         this.type = device.type;
         this.key = device.key;
+        this.phoneNumber = device.phoneNumber;
     }
 
     @Override
@@ -88,17 +104,4 @@ public class Device implements Parcelable {
         return key.equals(device.key);
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(key);
-        parcel.writeString(name);
-        parcel.writeString(type);
-        parcel.writeString(state);
-    }
 }
