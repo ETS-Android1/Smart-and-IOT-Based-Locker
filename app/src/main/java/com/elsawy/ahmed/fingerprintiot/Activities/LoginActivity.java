@@ -18,12 +18,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.elsawy.ahmed.fingerprintiot.Adapters.DeviceAdapter;
 import com.elsawy.ahmed.fingerprintiot.MainActivity;
+import com.elsawy.ahmed.fingerprintiot.Models.Device;
+import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
     private void onLoginSuccess() {
         loginButton.setEnabled(true);
         hideProgressDialog();
+
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
         LoginActivity.this.startActivity(i);
         finish();
@@ -131,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 Log.d(TAG, "signInWithEmail:success");
                 onLoginSuccess();
+                getUserInfo();
             } else {
                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                 onLoginFailed();
@@ -194,4 +204,33 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    private void openMainActivity() {
+        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+        LoginActivity.this.startActivity(i);
+        finish();
+    }
+
+    public void getUserInfo() {
+        String userId = FirebaseAuth.getInstance().getUid();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        ref.child("users").child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.getValue() != null) {
+                    String email = dataSnapshot.child("Email").getValue().toString();
+                    String username = dataSnapshot.child("username").getValue().toString();
+
+                    SharedPrefManager.getInstance(LoginActivity.this).userLogin(username,email);
+                    openMainActivity();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 }

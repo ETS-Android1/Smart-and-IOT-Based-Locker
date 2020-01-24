@@ -18,10 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.elsawy.ahmed.fingerprintiot.Activities.AddDevice;
 import com.elsawy.ahmed.fingerprintiot.Activities.LoginActivity;
 import com.elsawy.ahmed.fingerprintiot.Adapters.DeviceAdapter;
+import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -72,6 +74,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         addDeviceFab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddDevice.class)));
 
+        SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(this);
+        if (!sharedPrefManager.isLoggedIn()) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            putNavigationHeader();
+            setupToolbar();
+            setupDrawerLayout();
+            setupRecyclerView();
+        }
+    }
+
+    private void putNavigationHeader() {
+        SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(this);
+
+        View header = navigationView.getHeaderView(0);
+        TextView navigationHeaderUsername = header.findViewById(R.id.navigation_header_username);
+        TextView navigationHeaderEmail = header.findViewById(R.id.navigation_header_email);
+        navigationHeaderUsername.setText(sharedPrefManager.getUsername());
+        navigationHeaderEmail.setText(sharedPrefManager.getEmail());
+    }
+
+    public void setupRecyclerView() {
         DeviceAdapter deviceAdapter = new DeviceAdapter(MainActivity.this, count -> {
             if (count > 0) {
                 imageViewBackground.setVisibility(View.GONE);
@@ -79,15 +105,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 imageViewBackground.setVisibility(View.VISIBLE);
             }
         });
-
         devicesRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(20));
         devicesRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         devicesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         devicesRecyclerView.setAdapter(deviceAdapter);
-
-        setupToolbar();
-        setupDrawerLayout();
-
     }
 
     private void setupToolbar() {
@@ -126,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_logout:
-                signup();
+                signOut();
                 break;
         }
 
@@ -134,11 +155,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
-    private void signup() {
+    private void signOut() {
+        SharedPrefManager.getInstance(this).logout();
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
-
 }

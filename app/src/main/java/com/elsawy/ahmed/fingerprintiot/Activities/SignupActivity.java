@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.elsawy.ahmed.fingerprintiot.MainActivity;
+import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -163,17 +164,18 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-    private void saveProfileData(String name, String email) {
+    private void saveProfileData(String username, String email) {
         FirebaseUser user = SignupActivity.this.mAuth.getCurrentUser();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
         Map<String, String> userInfo = new HashMap<>();
         userInfo.put("Email", email);
-        userInfo.put("username", name);
+        userInfo.put("username", username);
 
         reference.child("users").child(user.getUid()).setValue(userInfo);
 
+        SharedPrefManager.getInstance(this).userLogin(username,email);
     }
 
     public void showProgressDialog(Context context, String message) {

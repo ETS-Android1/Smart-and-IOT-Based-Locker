@@ -14,6 +14,7 @@ import com.elsawy.ahmed.fingerprintiot.Activities.DeviceDetailActivity;
 import com.elsawy.ahmed.fingerprintiot.MainActivity;
 import com.elsawy.ahmed.fingerprintiot.Models.Device;
 import com.elsawy.ahmed.fingerprintiot.Models.RecyclerViewCount;
+import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
 import com.elsawy.ahmed.fingerprintiot.Models.UserHistory;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.elsawy.ahmed.fingerprintiot.ViewHolder.DeviceViewHolder;
@@ -71,8 +72,8 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
 
         View.OnClickListener powerButtonListener = view -> {
             UserHistory userHistory = new UserHistory();
-            //TODO handle username
-            userHistory.setUsername("ahmed elsawy");
+            
+            userHistory.setUsername(SharedPrefManager.getInstance(mContext).getUsername());
             userHistory.setTimestamp(System.currentTimeMillis() / 1000);
             userHistory.setChangedWay("mobile");
 
