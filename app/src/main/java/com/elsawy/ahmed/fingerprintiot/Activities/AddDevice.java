@@ -24,6 +24,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class AddDevice extends AppCompatActivity {
 
@@ -39,8 +40,8 @@ public class AddDevice extends AppCompatActivity {
     TextView deviceKeyTV;
     @BindView(R.id.device_phone_tv)
     TextView devicePhoneTV;
-    @BindView(R.id.add_device_btn)
-    Button addDeviceBtn;
+//    @BindView(R.id.add_device_btn)
+//    Button addDeviceBtn;
     @BindView(R.id.new_device_radio)
     RadioButton newDeviceRadio;
     @BindView(R.id.exist_device_radio)
@@ -58,16 +59,16 @@ public class AddDevice extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        addDeviceBtn.setOnClickListener(view -> {
+    }
 
-            String deviceName = deviceNameET.getText().toString();
-            String deviceType = deviceTypeET.getText().toString();
-            String devicePhone = devicePhoneET.getText().toString();
+    @OnClick(R.id.add_device_btn)
+    public void addDeviceBtn(){
+        String deviceName = deviceNameET.getText().toString();
+        String deviceType = deviceTypeET.getText().toString();
+        String devicePhone = devicePhoneET.getText().toString();
 
-            if (isValid(deviceName, devicePhone))
-                saveDeviceData(deviceName, deviceType, devicePhone);
-        });
-
+        if (isValid(deviceName, devicePhone))
+            saveDeviceData(deviceName, deviceType, devicePhone);
     }
 
     private boolean isValid(String deviceName, String devicePhone) {
