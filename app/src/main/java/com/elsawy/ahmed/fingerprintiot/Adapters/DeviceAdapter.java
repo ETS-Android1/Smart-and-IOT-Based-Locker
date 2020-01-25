@@ -11,9 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elsawy.ahmed.fingerprintiot.Activities.DeviceDetailActivity;
-import com.elsawy.ahmed.fingerprintiot.MainActivity;
 import com.elsawy.ahmed.fingerprintiot.Models.Device;
-import com.elsawy.ahmed.fingerprintiot.Models.RecyclerViewCount;
+import com.elsawy.ahmed.fingerprintiot.Models.RecyclerViewItemCount;
 import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
 import com.elsawy.ahmed.fingerprintiot.Models.UserHistory;
 import com.elsawy.ahmed.fingerprintiot.R;
@@ -37,21 +36,24 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
     private FirebaseUser userData;
     private DatabaseReference ref;
     private ArrayList<Device> deviceList;
-    private RecyclerViewCount recyclerViewCount;
+    private RecyclerViewItemCount recyclerViewItemCount;
 
-    public DeviceAdapter(Context mContext, RecyclerViewCount recyclerViewCount) {
+    public DeviceAdapter(Context mContext, RecyclerViewItemCount recyclerViewItemCount) {
         this.mContext = mContext;
-        this.recyclerViewCount = recyclerViewCount;
+        this.recyclerViewItemCount = recyclerViewItemCount;
 
         mAuth = FirebaseAuth.getInstance();
         userData = this.mAuth.getCurrentUser();
-        ref = FirebaseDatabase.getInstance().getReference();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.setPersistenceEnabled(true);
+        ref = firebaseDatabase.getReference();
         deviceList = new ArrayList<>();
 
         if (this.userData != null) {
             DeviceAdapter.this.ref.child("userDevices").child(DeviceAdapter.this.userData.getUid()).addValueEventListener(new DeviceListener());
             DeviceAdapter.this.ref.child("userDevices").child(DeviceAdapter.this.userData.getUid()).keepSynced(true);
         }
+
     }
 
     @NonNull
@@ -134,7 +136,7 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
                                 }
                             }
                             DeviceAdapter.this.notifyDataSetChanged();
-                            recyclerViewCount.setRecyclerViewCount(deviceList.size());
+                            recyclerViewItemCount.setRecyclerViewCount(deviceList.size());
                         }
 
                         @Override
