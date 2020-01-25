@@ -1,6 +1,5 @@
 package com.elsawy.ahmed.fingerprintiot.Adapters;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -8,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.elsawy.ahmed.fingerprintiot.Models.RecyclerViewCount;
+import com.elsawy.ahmed.fingerprintiot.Models.RecyclerViewItemCount;
 import com.elsawy.ahmed.fingerprintiot.Models.UserHistory;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.elsawy.ahmed.fingerprintiot.ViewHolder.UserHistoryViewHolder;
@@ -26,7 +25,7 @@ import java.util.Collections;
 public class HistoryAdapter extends RecyclerView.Adapter<UserHistoryViewHolder> {
 
     private String TAG = "HistoryAdapter";
-    private RecyclerViewCount recyclerViewCount;
+    private RecyclerViewItemCount recyclerViewItemCount;
 
 
     private FirebaseAuth mAuth;
@@ -34,9 +33,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<UserHistoryViewHolder> 
     private DatabaseReference ref;
     private ArrayList<UserHistory> usersList;
 
-    public HistoryAdapter(String deviceKey, RecyclerViewCount recyclerViewCount) {
-        this.recyclerViewCount = recyclerViewCount;
-
+    public HistoryAdapter(String deviceKey, RecyclerViewItemCount recyclerViewItemCount) {
+        this.recyclerViewItemCount = recyclerViewItemCount;
         mAuth = FirebaseAuth.getInstance();
         userData = this.mAuth.getCurrentUser();
         ref = FirebaseDatabase.getInstance().getReference();
@@ -82,7 +80,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<UserHistoryViewHolder> 
                 Collections.reverse(usersList); // reverse list to show last change state first
             }
             HistoryAdapter.this.notifyDataSetChanged();
-            recyclerViewCount.setRecyclerViewCount(usersList.size());
+            recyclerViewItemCount.setRecyclerViewCount(usersList.size());
         }
 
         @Override
