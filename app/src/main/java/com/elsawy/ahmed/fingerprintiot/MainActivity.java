@@ -28,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +52,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private FirebaseAuth mAuth;
 
+    static {
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -72,19 +77,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        addDeviceFab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddDevice.class)));
-
         SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(this);
-        if (!sharedPrefManager.isLoggedIn()) {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
+        if (sharedPrefManager.isLoggedIn())
+        {
             putNavigationHeader();
             setupToolbar();
             setupDrawerLayout();
             setupRecyclerView();
         }
+        addDeviceFab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddDevice.class)));
     }
 
     private void putNavigationHeader() {
