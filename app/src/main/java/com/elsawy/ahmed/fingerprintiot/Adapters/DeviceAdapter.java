@@ -42,11 +42,11 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
         this.mContext = mContext;
         this.recyclerViewItemCount = recyclerViewItemCount;
 
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        ref = firebaseDatabase.getReference();
         mAuth = FirebaseAuth.getInstance();
         userData = this.mAuth.getCurrentUser();
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseDatabase.setPersistenceEnabled(true);
-        ref = firebaseDatabase.getReference();
+
         deviceList = new ArrayList<>();
 
         if (this.userData != null) {

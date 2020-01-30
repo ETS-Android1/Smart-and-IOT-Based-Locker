@@ -34,7 +34,7 @@
 
     <style name="editTextStyle">
         <item name="android:background">@drawable/edit_text_border</item>
-        <item name="android:drawablePadding">10dp</item>
+        <item name="android:drawablePadding">5dp</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingStart">6dp</item>
