@@ -78,8 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
 
         SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(this);
-        if (sharedPrefManager.isLoggedIn())
-        {
+        if (sharedPrefManager.isLoggedIn())            {
             putNavigationHeader();
             setupToolbar();
             setupDrawerLayout();
