@@ -7,20 +7,12 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.elsawy.ahmed.fingerprintiot.R;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.elsawy.ahmed.fingerprintiot.database.DeviceFirebaseDataBase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,14 +32,11 @@ public class AddDevice extends AppCompatActivity {
     TextView deviceKeyTV;
     @BindView(R.id.device_phone_tv)
     TextView devicePhoneTV;
-//    @BindView(R.id.add_device_btn)
-//    Button addDeviceBtn;
     @BindView(R.id.new_device_radio)
     RadioButton newDeviceRadio;
     @BindView(R.id.exist_device_radio)
     RadioButton existDeviceRadio;
 
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,29 +46,35 @@ public class AddDevice extends AppCompatActivity {
         ButterKnife.bind(this);
         setupToolbar();
 
-        mAuth = FirebaseAuth.getInstance();
-
     }
 
     @OnClick(R.id.add_device_btn)
-    public void addDeviceBtn(){
+    public void addDeviceBtn() {
         String deviceName = deviceNameET.getText().toString();
         String deviceType = deviceTypeET.getText().toString();
-        String devicePhone = devicePhoneET.getText().toString();
+        String devicePhone = devicePhoneET.getText().toString().trim();
+        String key = deviceKeyET.getText().toString().trim();
+        boolean isNewDevice = newDeviceRadio.isChecked();
 
-        if (isValid(deviceName, devicePhone))
-            saveDeviceData(deviceName, deviceType, devicePhone);
+        if (isValidData(deviceName, devicePhone, key, isNewDevice)) {
+            DeviceFirebaseDataBase.insertNewDevice(deviceName, deviceType, devicePhone, isNewDevice, key);
+            finish();
+        }
     }
 
-    private boolean isValid(String deviceName, String devicePhone) {
+    private boolean isValidData(String deviceName, String devicePhone, String key, boolean isNewDevice) {
         boolean valid = true;
-        if (deviceName.length() <= 0) {
+        if (deviceName.length() <= 2) {
             deviceNameET.setError("required");
             valid = false;
         }
 
-        if (devicePhone.length() != 11) {
+        if (isNewDevice && devicePhone.length() != 11) {
             devicePhoneET.setError("enter a valid phone");
+            valid = false;
+        }
+        if (!isNewDevice && key.length() <= 15) {
+            devicePhoneET.setError("enter a valid key");
             valid = false;
         }
         return valid;
@@ -90,39 +85,6 @@ public class AddDevice extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_white_24dp);
-    }
-
-    private void saveDeviceData(String deviceName, String deviceType, String devicePhone) {
-
-        FirebaseUser user = AddDevice.this.mAuth.getCurrentUser();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        String key;
-        if (existDeviceRadio.isChecked()) {
-            key = deviceKeyET.getText().toString();
-        } else {
-            key = reference.child("Devices").push().getKey();
-        }
-
-        Map<String, String> deviceInfo = new HashMap<>();
-        deviceInfo.put("type", deviceType);
-        deviceInfo.put("phoneNumber", devicePhone);
-        deviceInfo.put("key", key);
-        deviceInfo.put("state", "OFF");
-
-        reference.child("userDevices").child(user.getUid()).child(key).child("name").setValue(deviceName);
-
-        if (newDeviceRadio.isChecked()) {
-            reference.child("Devices").child(key).setValue(deviceInfo).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    finish();
-                }
-            });
-        } else {
-            finish();
-        }
-
     }
 
     public void onNewDeviceRadioButtonClicked(View view) {

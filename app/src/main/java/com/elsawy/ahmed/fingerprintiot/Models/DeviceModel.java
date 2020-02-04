@@ -4,7 +4,7 @@ package com.elsawy.ahmed.fingerprintiot.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Device implements Parcelable {
+public class DeviceModel implements Parcelable {
 
     private String key;
     private String name;
@@ -12,10 +12,10 @@ public class Device implements Parcelable {
     private String phoneNumber;
     private String state;
 
-    public Device() {
+    public DeviceModel() {
     }
 
-    protected Device(Parcel in) {
+    protected DeviceModel(Parcel in) {
         key = in.readString();
         name = in.readString();
         type = in.readString();
@@ -37,15 +37,15 @@ public class Device implements Parcelable {
         return 0;
     }
 
-    public static final Creator<Device> CREATOR = new Creator<Device>() {
+    public static final Creator<DeviceModel> CREATOR = new Creator<DeviceModel>() {
         @Override
-        public Device createFromParcel(Parcel in) {
-            return new Device(in);
+        public DeviceModel createFromParcel(Parcel in) {
+            return new DeviceModel(in);
         }
 
         @Override
-        public Device[] newArray(int size) {
-            return new Device[size];
+        public DeviceModel[] newArray(int size) {
+            return new DeviceModel[size];
         }
     };
 
@@ -89,19 +89,19 @@ public class Device implements Parcelable {
         this.state = state;
     }
 
-    public void setDevice(Device device){
-        this.state = device.state;
-        this.type = device.type;
-        this.key = device.key;
-        this.phoneNumber = device.phoneNumber;
+    public void setDevice(DeviceModel deviceModel){
+        this.state = deviceModel.state;
+        this.type = deviceModel.type;
+        this.key = deviceModel.key;
+        this.phoneNumber = deviceModel.phoneNumber;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Device device = (Device) o;
-        return key.equals(device.key);
+        DeviceModel deviceModel = (DeviceModel) o;
+        return key.equals(deviceModel.key);
     }
 
 }

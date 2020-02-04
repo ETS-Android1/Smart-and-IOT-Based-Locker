@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.elsawy.ahmed.fingerprintiot.Models.UserHistory;
+import com.elsawy.ahmed.fingerprintiot.Models.HistoryModel;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.elsawy.ahmed.fingerprintiot.Utilities;
 
@@ -35,7 +35,7 @@ public class UserHistoryViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void bindToUserHistory(UserHistory currentUser) {
+    public void bindToUserHistory(HistoryModel currentUser) {
         Date date = new Date(currentUser.getTimestamp());
 //        Calendar calendar = newStateTV
         Log.i("Date", date.toString());

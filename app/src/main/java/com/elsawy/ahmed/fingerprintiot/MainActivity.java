@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,14 +24,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.elsawy.ahmed.fingerprintiot.Activities.AddDevice;
+import com.elsawy.ahmed.fingerprintiot.Activities.DeviceViewModel;
 import com.elsawy.ahmed.fingerprintiot.Activities.LoginActivity;
 import com.elsawy.ahmed.fingerprintiot.Adapters.DeviceAdapter;
+import com.elsawy.ahmed.fingerprintiot.Models.DeviceModel;
 import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.sign_up_toolbar)
     Toolbar toolbar;
     @BindView(R.id.main_activity_background)
-    ImageView imageViewBackground;
+    ImageView RecyclerViewimageBackground;
 
     private FirebaseAuth mAuth;
 
@@ -83,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setupToolbar();
             setupDrawerLayout();
             setupRecyclerView();
+
+
         }
         addDeviceFab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddDevice.class)));
     }
@@ -98,17 +107,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void setupRecyclerView() {
-        DeviceAdapter deviceAdapter = new DeviceAdapter(MainActivity.this, count -> {
-            if (count > 0) {
-                imageViewBackground.setVisibility(View.GONE);
-            } else {
-                imageViewBackground.setVisibility(View.VISIBLE);
-            }
-        });
+        DeviceAdapter deviceAdapter = new DeviceAdapter(MainActivity.this);
         devicesRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(20));
         devicesRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         devicesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         devicesRecyclerView.setAdapter(deviceAdapter);
+
+        DeviceViewModel viewModel = ViewModelProviders.of(this).get(DeviceViewModel.class);
+        LiveData<ArrayList<DeviceModel>> liveData = viewModel.getDevicesListLiveData();
+        liveData.observe(this, deviceModels -> {
+            deviceAdapter.setDeviceModelList(deviceModels);
+
+            if (deviceModels.size() > 0) {
+                RecyclerViewimageBackground.setVisibility(View.GONE);
+            } else {
+                RecyclerViewimageBackground.setVisibility(View.VISIBLE);
+            }
+        });
+
     }
 
     private void setupToolbar() {

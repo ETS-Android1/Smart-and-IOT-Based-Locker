@@ -6,7 +6,7 @@
     <item
         android:id="@+id/add_device"
         android:orderInCategory="100"
-        android:title="add device"
+        android:title="add deviceModel"
         android:icon="@drawable/ic_plus_circle_icon"
         app:showAsAction="ifRoom" />
 

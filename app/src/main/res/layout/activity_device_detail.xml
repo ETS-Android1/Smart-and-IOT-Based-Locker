@@ -37,7 +37,7 @@
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:layout_marginStart="20dp"
-                android:text="device one"
+                android:text="deviceModel one"
                 />
 
             <TextView

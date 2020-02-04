@@ -1,13 +1,13 @@
 package com.elsawy.ahmed.fingerprintiot.Models;
 
-public class UserHistory {
+public class HistoryModel {
 
     private String username;
     private String newState;
     private long timestamp;
     private String changedWay;
 
-    public UserHistory() {
+    public HistoryModel() {
     }
 
     public String getUsername() {

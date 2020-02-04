@@ -18,9 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.elsawy.ahmed.fingerprintiot.Adapters.DeviceAdapter;
 import com.elsawy.ahmed.fingerprintiot.MainActivity;
-import com.elsawy.ahmed.fingerprintiot.Models.Device;
 import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.google.android.gms.tasks.OnCompleteListener;

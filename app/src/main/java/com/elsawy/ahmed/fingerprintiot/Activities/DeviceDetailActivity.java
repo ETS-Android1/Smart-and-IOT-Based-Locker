@@ -3,6 +3,8 @@ package com.elsawy.ahmed.fingerprintiot.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,16 +22,15 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.elsawy.ahmed.fingerprintiot.Adapters.HistoryAdapter;
-import com.elsawy.ahmed.fingerprintiot.Models.Device;
-import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
-import com.elsawy.ahmed.fingerprintiot.Models.UserHistory;
+import com.elsawy.ahmed.fingerprintiot.Models.DeviceModel;
+import com.elsawy.ahmed.fingerprintiot.Models.HistoryModel;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.elsawy.ahmed.fingerprintiot.VerticalSpaceItemDecoration;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.elsawy.ahmed.fingerprintiot.database.DeviceFirebaseDataBase;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +38,9 @@ import butterknife.OnClick;
 
 public class DeviceDetailActivity extends AppCompatActivity {
 
-    private Device currentDevice;
+    private DeviceModel currentDeviceModel;
+    private final String ON = "ON";
+    private final String OFF = "OFF";
 
     @BindView(R.id.device_detail_state)
     TextView stateTV;
@@ -62,32 +65,39 @@ public class DeviceDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setupToolbar();
 
-        currentDevice = (Device) getIntent().getParcelableExtra("deviceInfo");
-        setDeviceInfo(currentDevice);
-        setupRecyclerView(currentDevice.getKey());
+        currentDeviceModel = (DeviceModel) getIntent().getParcelableExtra("deviceInfo");
+        setDeviceInfo(currentDeviceModel);
+        setupRecyclerView(currentDeviceModel.getKey());
 
     }
 
-    private void setDeviceInfo(Device currentDevice) {
-        stateTV.setText("State: " + currentDevice.getState());
-        nameTV.setText(currentDevice.getName());
-        keyTV.setText( "Key: " + currentDevice.getKey());
-        typeTV.setText("Type: " + currentDevice.getType());
+    private void setDeviceInfo(DeviceModel currentDeviceModel) {
+        stateTV.setText("State: " + currentDeviceModel.getState());
+        nameTV.setText(currentDeviceModel.getName());
+        keyTV.setText( "Key: " + currentDeviceModel.getKey());
+        typeTV.setText("Type: " + currentDeviceModel.getType());
     }
 
-    private void setupRecyclerView(String key){
-        HistoryAdapter historyAdapter = new HistoryAdapter(key, count -> {
-            if (count > 0) {
+    private void setupRecyclerView(String deviceKey) {
+        HistoryAdapter historyAdapter = new HistoryAdapter();
+
+        usersRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(15));
+        usersRecyclerView.setLayoutManager(new LinearLayoutManager(DeviceDetailActivity.this));
+        usersRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        usersRecyclerView.setAdapter(historyAdapter);
+
+
+        HistoryViewModel historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
+        LiveData<ArrayList<HistoryModel>> liveData = historyViewModel.getHistoryListLiveData(deviceKey);
+        liveData.observe(this, historyModelList -> {
+            historyAdapter.setHistoryModelList(historyModelList);
+            if (historyModelList.size() > 0) {
                 historyImageViewBackground.setVisibility(View.GONE);
             } else {
                 historyImageViewBackground.setVisibility(View.VISIBLE);
             }
         });
 
-        usersRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(15));
-        usersRecyclerView.setLayoutManager(new LinearLayoutManager(DeviceDetailActivity.this));
-        usersRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        usersRecyclerView.setAdapter(historyAdapter);
     }
 
     private void setupToolbar(){
@@ -115,46 +125,38 @@ public class DeviceDetailActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 //        dialog.setCancelable(false);
 
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
         final Button onBtn = dialog.findViewById(R.id.on_sms_btn);
         final Button offBtn = dialog.findViewById(R.id.off_sms_btn);
 
-        onBtn.setOnClickListener(v -> {sendSMS("ON");dialog.dismiss();});
-        offBtn.setOnClickListener(v -> {sendSMS("OFF");dialog.dismiss();});
+        onBtn.setOnClickListener(v -> {sendSMS(ON);dialog.dismiss();});
+        offBtn.setOnClickListener(v -> {sendSMS(OFF);dialog.dismiss();});
 
         dialog.show();
-        dialog.getWindow().setAttributes(lp);
+        dialog.getWindow().setAttributes(layoutParams);
     }
 
     @OnClick(R.id.power_fab)
-    public void handlePowerBtn(){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        UserHistory userHistory = new UserHistory();
+    public void handlePowerBtn() {
 
-        userHistory.setUsername(SharedPrefManager.getInstance(this).getUsername());
-        userHistory.setTimestamp(System.currentTimeMillis() / 1000);
-        userHistory.setChangedWay("mobile");
-
-        if (currentDevice.getState().equals("ON")) {
-            userHistory.setNewState("OFF");
-            ref.child("Devices").child(currentDevice.getKey()).child("state").setValue("OFF");
-            currentDevice.setState("OFF");
-        } else if (currentDevice.getState().equals("OFF")) {
-            userHistory.setNewState("ON");
-            ref.child("Devices").child(currentDevice.getKey()).child("state").setValue("ON");
-            currentDevice.setState("ON");
+        if (currentDeviceModel.getState().equals(ON)) {
+            DeviceFirebaseDataBase.updateDeviceState(this, currentDeviceModel.getKey(), OFF);
+            currentDeviceModel.setState(OFF);
+        } else if (currentDeviceModel.getState().equals(OFF)) {
+            DeviceFirebaseDataBase.updateDeviceState(this, currentDeviceModel.getKey(), ON);
+            currentDeviceModel.setState(ON);
         }
-        ref.child("devicesHistory").child(currentDevice.getKey()).push().setValue(userHistory);
-        stateTV.setText("State: " + currentDevice.getState());
+        stateTV.setText("State: " + currentDeviceModel.getState());
+
     }
 
     private void sendSMS(String message) {
-        SmsManager smgr = SmsManager.getDefault();
-        smgr.sendTextMessage(currentDevice.getPhoneNumber(), null, message, null, null);
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(currentDeviceModel.getPhoneNumber(), null, message, null, null);
         Log.i("Finished sending SMS...", "");
     }
 

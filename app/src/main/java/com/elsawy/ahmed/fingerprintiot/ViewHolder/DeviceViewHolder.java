@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.elsawy.ahmed.fingerprintiot.Models.Device;
+import com.elsawy.ahmed.fingerprintiot.Models.DeviceModel;
 import com.elsawy.ahmed.fingerprintiot.R;
 
 import butterknife.BindView;
@@ -31,14 +31,14 @@ public class DeviceViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void bindToDevice(Device currentDevice, View.OnClickListener cardViewListener, View.OnClickListener powerButtonListener) {
+    public void bindToDevice(DeviceModel currentDeviceModel, View.OnClickListener cardViewListener, View.OnClickListener powerButtonListener) {
 
-        deviceNameTV.setText(currentDevice.getName());
-        deviceStateTV.setText("State : " + currentDevice.getState());
+        deviceNameTV.setText(currentDeviceModel.getName());
+        deviceStateTV.setText("State : " + currentDeviceModel.getState());
         deviceCardView.setOnClickListener(cardViewListener);
         devicePowerBtn.setOnClickListener(powerButtonListener);
 //        deviceStateTV.setOnClickListener(powerButtonListener);
-        putPowerButtonColor(currentDevice.getState());
+        putPowerButtonColor(currentDeviceModel.getState());
 
     }
 
