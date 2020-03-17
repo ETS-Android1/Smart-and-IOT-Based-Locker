@@ -49,7 +49,6 @@ public class HistoryFirebaseQueryLiveData extends LiveData<ArrayList<HistoryMode
                 historyModelList.clear();
 
                 for (DataSnapshot userHistorySnapshot : dataSnapshot.getChildren()) {
-                    Log.i("userHistorySnapshot", userHistorySnapshot.toString());
                     HistoryModel currentHistoryModel = userHistorySnapshot.getValue(HistoryModel.class);
                     historyModelList.add(currentHistoryModel);
                 }
