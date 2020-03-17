@@ -20,10 +20,9 @@ public class HistoryFirebaseQueryLiveData extends LiveData<ArrayList<HistoryMode
 
     private final HistoryValueEventListener historyListener = new HistoryValueEventListener();
 
-    ArrayList<HistoryModel> historyModelList = new ArrayList<>();
+    private ArrayList<HistoryModel> historyModelList = new ArrayList<>();
 
     private Query HistoryQuery;
-
 
     public HistoryFirebaseQueryLiveData(String deviceKey) {
         HistoryQuery = FirebaseDatabase.getInstance().getReference("/devicesHistory")
@@ -50,6 +49,7 @@ public class HistoryFirebaseQueryLiveData extends LiveData<ArrayList<HistoryMode
                 historyModelList.clear();
 
                 for (DataSnapshot userHistorySnapshot : dataSnapshot.getChildren()) {
+                    Log.i("userHistorySnapshot", userHistorySnapshot.toString());
                     HistoryModel currentHistoryModel = userHistorySnapshot.getValue(HistoryModel.class);
                     historyModelList.add(currentHistoryModel);
                 }

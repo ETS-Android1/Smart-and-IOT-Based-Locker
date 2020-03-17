@@ -14,6 +14,8 @@ public class HistoryFirebaseDataBase {
 
     public static void createNewHistory(Context mContext, final String key, final String state) {
         HistoryModel userHistory = new HistoryModel();
+        //TODO Read id from firebase
+        userHistory.setId("100");
         userHistory.setUsername(SharedPrefManager.getInstance(mContext).getUsername());
         userHistory.setTimestamp(System.currentTimeMillis() / 1000);
         userHistory.setChangedWay("mobile");

@@ -1,6 +1,5 @@
 package com.elsawy.ahmed.fingerprintiot.ViewHolder;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,9 +11,8 @@ import com.elsawy.ahmed.fingerprintiot.Models.HistoryModel;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.elsawy.ahmed.fingerprintiot.Utilities;
 
-import java.util.Date;
+import butterknife.BindView;    //    @PropertyName("username")
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class UserHistoryViewHolder extends RecyclerView.ViewHolder {
@@ -36,11 +34,12 @@ public class UserHistoryViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindToUserHistory(HistoryModel currentUser) {
-        Date date = new Date(currentUser.getTimestamp());
-//        Calendar calendar = newStateTV
-        Log.i("Date", date.toString());
-
+        //TODO change remove the condition and else
+        if (currentUser.getUsername()!= null)
         usernameTV.setText(currentUser.getUsername());
+        else
+            usernameTV.setText(currentUser.getId());
+
         newStateTV.setText(currentUser.getNewState());
         timeTV.setText(Utilities.getTime(currentUser.getTimestamp()));
         dateTV.setText(Utilities.getDate(currentUser.getTimestamp()));

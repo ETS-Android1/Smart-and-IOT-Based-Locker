@@ -23,7 +23,7 @@ public class DeviceFirebaseQueryLiveData extends LiveData<ArrayList<DeviceModel>
 
     private final DeviceValueEventListener listener = new DeviceValueEventListener();
 
-    ArrayList<DeviceModel> DevicesList = new ArrayList<>();
+    private ArrayList<DeviceModel> DevicesList = new ArrayList<>();
 
     private static final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static final FirebaseUser userData = mAuth.getCurrentUser();
@@ -32,9 +32,7 @@ public class DeviceFirebaseQueryLiveData extends LiveData<ArrayList<DeviceModel>
     private static final DatabaseReference DEVICE_Data_REF =
             FirebaseDatabase.getInstance().getReference("/Devices");
 
-
-    public DeviceFirebaseQueryLiveData() {
-    }
+    public DeviceFirebaseQueryLiveData() {}
 
     @Override
     protected void onActive() {
