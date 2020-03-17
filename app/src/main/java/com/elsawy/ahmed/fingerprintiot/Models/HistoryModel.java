@@ -7,10 +7,15 @@ import com.google.firebase.database.PropertyName;
 @IgnoreExtraProperties
 public class HistoryModel {
 
+    @PropertyName("ID")
     private String Id;
+    @Exclude
     private String username;
+    @PropertyName("state")
     private String newState;
+    @PropertyName("timestamp")
     private Long timestamp;
+    @PropertyName("changedWay")
     private String changedWay;
 
     public HistoryModel() {

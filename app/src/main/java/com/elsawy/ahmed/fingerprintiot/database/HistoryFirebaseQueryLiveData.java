@@ -2,11 +2,13 @@ package com.elsawy.ahmed.fingerprintiot.database;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.elsawy.ahmed.fingerprintiot.Models.HistoryModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -22,23 +24,26 @@ public class HistoryFirebaseQueryLiveData extends LiveData<ArrayList<HistoryMode
 
     private ArrayList<HistoryModel> historyModelList = new ArrayList<>();
 
-    private Query HistoryQuery;
+    private Query historyQuery;
+    private DatabaseReference deviceUserIdRef;
 
     public HistoryFirebaseQueryLiveData(String deviceKey) {
-        HistoryQuery = FirebaseDatabase.getInstance().getReference("/devicesHistory")
-                .child(deviceKey).orderByChild("timestamp").limitToLast(15);
+        historyQuery = FirebaseDatabase.getInstance().getReference("/devicesHistory")
+                .child(deviceKey).orderByChild("timestamp").limitToLast(20);
+        deviceUserIdRef = FirebaseDatabase.getInstance().getReference("/deviceUserId").child(deviceKey);
+
     }
 
     @Override
     protected void onActive() {
         Log.d(LOG_TAG, "onActive");
-        HistoryQuery.addValueEventListener(historyListener);
+        historyQuery.addValueEventListener(historyListener);
     }
 
     @Override
     protected void onInactive() {
         Log.d(LOG_TAG, "onInactive");
-        HistoryQuery.removeEventListener(historyListener);
+        historyQuery.removeEventListener(historyListener);
     }
 
     private class HistoryValueEventListener implements ValueEventListener {
@@ -47,13 +52,32 @@ public class HistoryFirebaseQueryLiveData extends LiveData<ArrayList<HistoryMode
         public void onDataChange(DataSnapshot dataSnapshot) {
             if (dataSnapshot.getValue() != null) {
                 historyModelList.clear();
+                Log.i("userHistorySnapshot2",dataSnapshot.getChildren().toString());
 
-                for (DataSnapshot userHistorySnapshot : dataSnapshot.getChildren()) {
+                for (final DataSnapshot userHistorySnapshot : dataSnapshot.getChildren()) {
+                    Log.i("userHistorySnapshot",userHistorySnapshot.toString());
                     HistoryModel currentHistoryModel = userHistorySnapshot.getValue(HistoryModel.class);
-                    historyModelList.add(currentHistoryModel);
+
+                    deviceUserIdRef.child(currentHistoryModel.getId()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getValue() != null) {
+                                String username = dataSnapshot.getValue(String.class);
+                                currentHistoryModel.setUsername(username);
+                                Log.i("currentHistoryModel", dataSnapshot.toString());
+                                Log.i("currentHistoryModel", username);
+                            }
+                            historyModelList.add(currentHistoryModel);
+                            Collections.reverse(historyModelList); // reverse list to show last change state first
+                            setValue(historyModelList);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
-                Collections.reverse(historyModelList); // reverse list to show last change state first
-                setValue(historyModelList);
             }
         }
 

@@ -60,9 +60,12 @@ public class DeviceFirebaseQueryLiveData extends LiveData<ArrayList<DeviceModel>
 
                     DeviceModel newDevice = new DeviceModel();
                     String deviceName = userDeviceSnapshot.child("deviceName").getValue(String.class);
+                    String userID = userDeviceSnapshot.child("userID").getValue(String.class);
 
                     newDevice.setName(deviceName);
+                    newDevice.setUserID(userID);
                     newDevice.setKey(key);
+                    Log.i("userIDm",deviceName+userID);
 
                     DEVICE_Data_REF.child(key).addValueEventListener(new ValueEventListener() {
                         @Override

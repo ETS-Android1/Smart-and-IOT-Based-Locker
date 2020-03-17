@@ -46,8 +46,6 @@ public class DeviceDetailActivity extends AppCompatActivity {
     TextView stateTV;
     @BindView(R.id.device_detail_name)
     TextView nameTV;
-    @BindView(R.id.device_detail_type)
-    TextView typeTV;
     @BindView(R.id.device_detail_key)
     TextView keyTV;
     @BindView(R.id.users_history_recycler_view)
@@ -66,6 +64,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
         setupToolbar();
 
         currentDeviceModel = (DeviceModel) getIntent().getParcelableExtra("deviceInfo");
+        Log.i("userID",currentDeviceModel.getUserID());
         setDeviceInfo(currentDeviceModel);
         setupRecyclerView(currentDeviceModel.getKey());
 
@@ -75,7 +74,6 @@ public class DeviceDetailActivity extends AppCompatActivity {
         stateTV.setText("State: " + currentDeviceModel.getState());
         nameTV.setText(currentDeviceModel.getName());
         keyTV.setText( "Key: " + currentDeviceModel.getKey());
-        typeTV.setText("Type: " + currentDeviceModel.getType());
     }
 
     private void setupRecyclerView(String deviceKey) {
@@ -109,10 +107,8 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                onBackPressed();
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -144,10 +140,10 @@ public class DeviceDetailActivity extends AppCompatActivity {
     public void handlePowerBtn() {
 
         if (currentDeviceModel.getState().equals(ON)) {
-            DeviceFirebaseDataBase.updateDeviceState(this, currentDeviceModel.getKey(), OFF);
+            DeviceFirebaseDataBase.updateDeviceState(this, currentDeviceModel.getKey(),currentDeviceModel.getUserID(), OFF);
             currentDeviceModel.setState(OFF);
         } else if (currentDeviceModel.getState().equals(OFF)) {
-            DeviceFirebaseDataBase.updateDeviceState(this, currentDeviceModel.getKey(), ON);
+            DeviceFirebaseDataBase.updateDeviceState(this, currentDeviceModel.getKey(),currentDeviceModel.getUserID(), ON);
             currentDeviceModel.setState(ON);
         }
         stateTV.setText("State: " + currentDeviceModel.getState());

@@ -90,8 +90,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setupToolbar();
             setupDrawerLayout();
             setupRecyclerView();
-
-
         }
         addDeviceFab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddDevice.class)));
     }

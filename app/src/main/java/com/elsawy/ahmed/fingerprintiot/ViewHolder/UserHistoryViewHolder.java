@@ -35,11 +35,10 @@ public class UserHistoryViewHolder extends RecyclerView.ViewHolder {
 
     public void bindToUserHistory(HistoryModel currentUser) {
         //TODO change remove the condition and else
-        if (currentUser.getUsername()!= null)
+//        if (currentUser.getUsername()!= null)
         usernameTV.setText(currentUser.getUsername());
-        else
-            usernameTV.setText(currentUser.getId());
-
+//        else
+//        usernameTV.setText(currentUser.getId());
         newStateTV.setText(currentUser.getNewState());
         timeTV.setText(Utilities.getTime(currentUser.getTimestamp()));
         dateTV.setText(Utilities.getDate(currentUser.getTimestamp()));

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.elsawy.ahmed.fingerprintiot.database.DeviceFirebaseDataBase;
 
@@ -60,7 +61,8 @@ public class AddDevice extends AppCompatActivity {
         boolean isNewDevice = newDeviceRadio.isChecked();
 
         if (isValidData(deviceName, userID, devicePhone, key, isNewDevice)) {
-            DeviceFirebaseDataBase.insertNewDevice(deviceName, userID, deviceType, devicePhone, isNewDevice, key);
+            String myUsername = SharedPrefManager.getInstance(getApplicationContext()).getUsername();
+            DeviceFirebaseDataBase.insertNewDevice(myUsername, deviceName, userID, deviceType, devicePhone, isNewDevice, key);
             finish();
         }
     }

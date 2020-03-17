@@ -12,10 +12,11 @@ public class HistoryFirebaseDataBase {
     private static final DatabaseReference REF =
             FirebaseDatabase.getInstance().getReference();
 
-    public static void createNewHistory(Context mContext, final String key, final String state) {
+    public static void createNewHistory(Context mContext, final String key,final String userID, final String state) {
         HistoryModel userHistory = new HistoryModel();
         //TODO Read id from firebase
-        userHistory.setId("100");
+        userHistory.setId(userID);
+        //TODO remove this line
         userHistory.setUsername(SharedPrefManager.getInstance(mContext).getUsername());
         userHistory.setTimestamp(System.currentTimeMillis() / 1000);
         userHistory.setChangedWay("mobile");

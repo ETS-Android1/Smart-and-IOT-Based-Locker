@@ -20,12 +20,12 @@ public class DeviceFirebaseDataBase {
     private static final DatabaseReference REF =
             FirebaseDatabase.getInstance().getReference();
 
-    public static void updateDeviceState(final Context mContext, final String key, final String state) {
+    public static void updateDeviceState(final Context mContext, final String key, final String userID, final String state) {
         REF.child("Devices").child(key).child("state").setValue(state);
-        HistoryFirebaseDataBase.createNewHistory(mContext, key, state);
+        HistoryFirebaseDataBase.createNewHistory(mContext, key,userID, state);
     }
 
-    public static void insertNewDevice(String deviceName, String userID, String deviceType, String devicePhone, boolean isNewDevice, String existDeviceKey) {
+    public static void insertNewDevice(String myUsername, String deviceName, String userID, String deviceType, String devicePhone, boolean isNewDevice, String existDeviceKey) {
 
         String key;
         if (!isNewDevice) {
@@ -43,8 +43,11 @@ public class DeviceFirebaseDataBase {
         Map<String, String> userDevice = new HashMap<>();
         userDevice.put("deviceName", deviceName);
         userDevice.put("userID", userID);
-
         REF.child("userDevices").child(userData.getUid()).child(key).setValue(userDevice);
+
+//        REF.child("userDevices").child(userData.getUid()).child(key).child("deviceName").setValue(deviceName);
+
+        REF.child("deviceUserId").child(key).child(userID).setValue(myUsername);
 
         if (isNewDevice)
             REF.child("Devices").child(key).setValue(deviceInfo);

@@ -49,15 +49,14 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceViewHolder> {
         View.OnClickListener powerButtonListener = view -> {
             if (currentDeviceModel.getState().equals(ON)) {
                 holder.putPowerButtonColor(OFF);
-                DeviceFirebaseDataBase.updateDeviceState(mContext, currentDeviceModel.getKey(), OFF);
+                DeviceFirebaseDataBase.updateDeviceState(mContext, currentDeviceModel.getKey(), currentDeviceModel.getUserID(), OFF);
             } else if (currentDeviceModel.getState().equals(OFF)) {
                 holder.putPowerButtonColor(ON);
-                DeviceFirebaseDataBase.updateDeviceState(mContext, currentDeviceModel.getKey(), ON);
+                DeviceFirebaseDataBase.updateDeviceState(mContext, currentDeviceModel.getKey(),currentDeviceModel.getUserID(), ON);
             }
         };
 
         holder.bindToDevice(currentDeviceModel, cardViewListener, powerButtonListener);
-
     }
 
     public void setDeviceModelList(ArrayList<DeviceModel> deviceModelList) {
