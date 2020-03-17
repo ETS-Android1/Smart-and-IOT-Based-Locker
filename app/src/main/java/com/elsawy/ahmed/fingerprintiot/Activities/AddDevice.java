@@ -22,6 +22,8 @@ public class AddDevice extends AppCompatActivity {
 
     @BindView(R.id.device_name_et)
     EditText deviceNameET;
+    @BindView(R.id.user_id_et)
+    EditText userIdET;
     @BindView(R.id.device_type_et)
     EditText deviceTypeET;
     @BindView(R.id.device_key_et)
@@ -51,24 +53,28 @@ public class AddDevice extends AppCompatActivity {
     @OnClick(R.id.add_device_btn)
     public void addDeviceBtn() {
         String deviceName = deviceNameET.getText().toString();
+        String userID = userIdET.getText().toString();
         String deviceType = deviceTypeET.getText().toString();
         String devicePhone = devicePhoneET.getText().toString().trim();
         String key = deviceKeyET.getText().toString().trim();
         boolean isNewDevice = newDeviceRadio.isChecked();
 
-        if (isValidData(deviceName, devicePhone, key, isNewDevice)) {
-            DeviceFirebaseDataBase.insertNewDevice(deviceName, deviceType, devicePhone, isNewDevice, key);
+        if (isValidData(deviceName, userID, devicePhone, key, isNewDevice)) {
+            DeviceFirebaseDataBase.insertNewDevice(deviceName, userID, deviceType, devicePhone, isNewDevice, key);
             finish();
         }
     }
 
-    private boolean isValidData(String deviceName, String devicePhone, String key, boolean isNewDevice) {
+    private boolean isValidData(String deviceName,String userID, String devicePhone, String key, boolean isNewDevice) {
         boolean valid = true;
-        if (deviceName.length() <= 2) {
+        if (deviceName.length() < 2) {
+            deviceNameET.setError("At least two characters");
+            valid = false;
+        }
+        if (userID.length() <= 1) {
             deviceNameET.setError("required");
             valid = false;
         }
-
         if (isNewDevice && devicePhone.length() != 11) {
             devicePhoneET.setError("enter a valid phone");
             valid = false;

@@ -25,7 +25,7 @@ public class DeviceFirebaseDataBase {
         HistoryFirebaseDataBase.createNewHistory(mContext, key, state);
     }
 
-    public static void insertNewDevice(String deviceName, String deviceType, String devicePhone, boolean isNewDevice, String existDeviceKey) {
+    public static void insertNewDevice(String deviceName, String userID, String deviceType, String devicePhone, boolean isNewDevice, String existDeviceKey) {
 
         String key;
         if (!isNewDevice) {
@@ -40,7 +40,11 @@ public class DeviceFirebaseDataBase {
         deviceInfo.put("key", key);
         deviceInfo.put("state", "OFF");
 
-        REF.child("userDevices").child(userData.getUid()).child(key).child("name").setValue(deviceName);
+        Map<String, String> userDevice = new HashMap<>();
+        userDevice.put("deviceName", deviceName);
+        userDevice.put("userID", userID);
+
+        REF.child("userDevices").child(userData.getUid()).child(key).setValue(userDevice);
 
         if (isNewDevice)
             REF.child("Devices").child(key).setValue(deviceInfo);

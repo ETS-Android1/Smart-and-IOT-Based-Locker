@@ -31,137 +31,148 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/login_sign_up_padding">
+
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
 
-                <RadioButton android:id="@+id/new_device_radio"
+                <RadioButton
+                    android:id="@+id/new_device_radio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/new_device"
-                    android:onClick="onNewDeviceRadioButtonClicked"
-                    android:checked="true"
                     android:layout_marginEnd="20dp"
-                    />
+                    android:checked="true"
+                    android:onClick="onNewDeviceRadioButtonClicked"
+                    android:text="@string/new_device" />
 
-                <RadioButton android:id="@+id/exist_device_radio"
+                <RadioButton
+                    android:id="@+id/exist_device_radio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onNewDeviceRadioButtonClicked"
                     android:checked="false"
-                    android:text="@string/exist_device"/>
+                    android:onClick="onNewDeviceRadioButtonClicked"
+                    android:text="@string/exist_device" />
             </RadioGroup>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="@string/device_name"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
-                />
+                android:text="@string/device_name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/device_name_et"
+                style="@style/editTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/device_name"
-                android:inputType="text"
-                style="@style/editTextStyle"
                 android:layout_marginBottom="5dp"
-                />
+                android:hint="@string/device_name"
+                android:inputType="text" />
 
             <TextView
-                android:visibility="gone"
+                android:id="@+id/user_id_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/user_id"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/user_id_et"
+                style="@style/editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/user_id"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/device_type"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="@string/device_type"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                />
+                android:visibility="gone" />
 
             <EditText
-                android:visibility="gone"
                 android:id="@+id/device_type_et"
+                style="@style/editTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:hint="@string/device_type"
                 android:inputType="text"
-                style="@style/editTextStyle"
-                android:layout_marginBottom="8dp"
-                />
-
+                android:visibility="gone" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/device_key_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/device_key"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="@string/device_key"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                />
+                android:visibility="gone" />
 
             <EditText
-                android:visibility="gone"
                 android:id="@+id/device_key_et"
+                style="@style/editTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:hint="@string/device_key"
                 android:inputType="text"
-                style="@style/editTextStyle"
-                android:layout_marginBottom="10dp"
-                />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/device_phone_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:text="@string/device_phone"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
-                />
+                android:text="@string/device_phone"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/device_phone_et"
+                style="@style/editTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/device_phone"
-                android:inputType="text"
-                style="@style/editTextStyle"
                 android:layout_marginBottom="10dp"
-                />
-
-
+                android:hint="@string/device_phone"
+                android:inputType="phone" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="10dp"
-                android:layout_marginTop="25dp"
                 android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginEnd="25dp"
                 android:layout_marginBottom="15dp"
-                >
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+
                 <com.balysv.materialripple.MaterialRippleLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     style="@style/rippleStyleGray"
-                    >
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
                     <Button
                         android:id="@+id/add_device_btn"
                         android:layout_width="match_parent"

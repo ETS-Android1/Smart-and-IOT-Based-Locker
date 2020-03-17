@@ -23,5 +23,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="device_phone">device phone</string>
+    <string name="user_id">user id</string>
 
 </resources>
