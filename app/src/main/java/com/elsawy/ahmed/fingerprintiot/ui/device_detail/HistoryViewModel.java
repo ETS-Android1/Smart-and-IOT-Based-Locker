@@ -16,7 +16,6 @@ public class HistoryViewModel  extends ViewModel {
     @NonNull
     public LiveData<ArrayList<HistoryModel>> getHistoryListLiveData(String deviceKey) {
         final HistoryFirebaseQueryLiveData liveData = new HistoryFirebaseQueryLiveData(deviceKey);
-
         return liveData;
     }
 

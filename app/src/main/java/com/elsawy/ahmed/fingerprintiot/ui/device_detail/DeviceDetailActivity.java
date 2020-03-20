@@ -63,13 +63,6 @@ public class DeviceDetailActivity extends AppCompatActivity {
         setupToolbar();
 
         currentDeviceModel = (DeviceModel) getIntent().getParcelableExtra("deviceInfo");
-        Log.i("userID",
-                currentDeviceModel.getUserID()+
-                currentDeviceModel.getName()+
-                        currentDeviceModel.getPhoneNumber()+
-                        currentDeviceModel.getState()+
-                currentDeviceModel.getKey()
-        );
         setDeviceInfo(currentDeviceModel);
         setupRecyclerView(currentDeviceModel.getKey());
 

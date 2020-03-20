@@ -19,80 +19,32 @@ import java.util.ArrayList;
 
 public class HistoryFirebaseQueryLiveData extends LiveData<ArrayList<HistoryModel>> {
 
-    String LOG_TAG = "HistoryFirebaseQueryLiveData";
-
-    private final HistoryValueEventListener historyListener = new HistoryValueEventListener();
-
     private ArrayList<HistoryModel> historyModelList = new ArrayList<>();
 
     private Query historyQuery;
     private DatabaseReference deviceUserIdRef;
 
     public HistoryFirebaseQueryLiveData(String deviceKey) {
-        Log.d(LOG_TAG, deviceKey);
         historyQuery = FirebaseDatabase.getInstance().getReference("/devicesHistory")
-                .child(deviceKey).orderByChild("timestamp").limitToLast(15);
+                .child(deviceKey).orderByChild("timestamp").limitToLast(20);
         deviceUserIdRef = FirebaseDatabase.getInstance().getReference("/deviceUserId").child(deviceKey);
 
     }
 
     @Override
     protected void onActive() {
-        Log.d(LOG_TAG, "onActive");
-//        historyQuery.addValueEventListener(historyListener);
-        historyQuery.addChildEventListener(childEventListener);
+        historyQuery.addChildEventListener(historyChildEventListener);
     }
 
     @Override
     protected void onInactive() {
-        Log.d(LOG_TAG, "onInactive");
-        historyQuery.removeEventListener(historyListener);
+        historyQuery.removeEventListener(historyChildEventListener);
     }
 
-    private class HistoryValueEventListener implements ValueEventListener {
-
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            if (dataSnapshot.getValue() != null) {
-                historyModelList.clear();
-                Log.i(LOG_TAG,dataSnapshot.getChildren().toString());
-
-                for (final DataSnapshot userHistorySnapshot : dataSnapshot.getChildren()) {
-                    Log.i(LOG_TAG,userHistorySnapshot.toString());
-                    HistoryModel currentHistoryModel = userHistorySnapshot.getValue(HistoryModel.class);
-
-                    deviceUserIdRef.child(currentHistoryModel.getId()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.getValue() != null) {
-                                String username = dataSnapshot.getValue(String.class);
-                                currentHistoryModel.setUsername(username);
-                                Log.i("currentHistoryModel", dataSnapshot.toString());
-                                Log.i("currentHistoryModel", username);
-                            }
-                            historyModelList.add(currentHistoryModel);
-                            setValue(historyModelList);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            }
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-        }
-    }
-
-    private ChildEventListener childEventListener = new ChildEventListener() {
+    private ChildEventListener historyChildEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(@NonNull DataSnapshot userHistorySnapshot, @Nullable String s) {
 
-            Log.i(LOG_TAG, userHistorySnapshot.toString());
             HistoryModel currentHistoryModel = userHistorySnapshot.getValue(HistoryModel.class);
 
             deviceUserIdRef.child(currentHistoryModel.getId()).addValueEventListener(new ValueEventListener() {
@@ -101,39 +53,33 @@ public class HistoryFirebaseQueryLiveData extends LiveData<ArrayList<HistoryMode
                     if (dataSnapshot.getValue() != null) {
                         String username = dataSnapshot.getValue(String.class);
                         currentHistoryModel.setUsername(username);
-                        Log.i("currentHistoryModel", dataSnapshot.toString());
-                        Log.i("currentHistoryModel", username);
                     }
-                    historyModelList.add(currentHistoryModel);
+                    historyModelList.add(0, currentHistoryModel);
                     setValue(historyModelList);
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
                 }
             });
         }
 
         @Override
         public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
         }
 
         @Override
         public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
         }
 
         @Override
         public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
-
         }
+
     };
 
-    }
+}

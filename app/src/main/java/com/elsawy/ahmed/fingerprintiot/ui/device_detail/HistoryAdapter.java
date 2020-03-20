@@ -14,7 +14,6 @@ import java.util.Collections;
 
 public class HistoryAdapter extends RecyclerView.Adapter<UserHistoryViewHolder> {
 
-    private String TAG = "HistoryAdapter";
     private ArrayList<HistoryModel> historyModelList = new ArrayList<>();
 
     @NonNull
@@ -34,9 +33,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<UserHistoryViewHolder> 
         return historyModelList.size();
     }
 
-    public void setHistoryModelList(ArrayList<HistoryModel> historyModelList) {
+    void setHistoryModelList(ArrayList<HistoryModel> historyModelList) {
         this.historyModelList = historyModelList;
-        Collections.sort(this.historyModelList,Collections.reverseOrder());
         HistoryAdapter.this.notifyDataSetChanged();
     }
 
