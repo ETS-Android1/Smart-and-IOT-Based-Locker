@@ -13,7 +13,7 @@ public class TimeHandle {
         int minutes = calendar.get(Calendar.MINUTE);
         String timeForm = (calendar.get(Calendar.AM_PM)) == 0 ? "AM" : "PM";
 
-        return (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + " " + timeForm;
+        return (hours < 10 ? (hours == 0 ? 12 : "0" + hours) : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + " " + timeForm;
     }
 
     public static String getDate(long timestamp) {
