@@ -1,11 +1,11 @@
-package com.elsawy.ahmed.fingerprintiot.Models;
+package com.elsawy.ahmed.fingerprintiot.data.Models;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.PropertyName;
 
 @IgnoreExtraProperties
-public class HistoryModel {
+public class HistoryModel  implements Comparable< HistoryModel >{
 
     @PropertyName("ID")
     private String Id;
@@ -71,4 +71,8 @@ public class HistoryModel {
         this.changedWay = changedWay;
     }
 
+    @Override
+    public int compareTo(HistoryModel historyModel) {
+        return this.getTimestamp().compareTo(historyModel.getTimestamp());
+    }
 }

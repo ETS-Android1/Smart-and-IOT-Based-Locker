@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot.ViewHolder;
+package com.elsawy.ahmed.fingerprintiot.ui.device_detail;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -7,9 +7,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.elsawy.ahmed.fingerprintiot.Models.HistoryModel;
+import com.elsawy.ahmed.fingerprintiot.data.Models.HistoryModel;
 import com.elsawy.ahmed.fingerprintiot.R;
-import com.elsawy.ahmed.fingerprintiot.Utilities;
+import com.elsawy.ahmed.fingerprintiot.utils.TimeHandle;
 
 import butterknife.BindView;    //    @PropertyName("username")
 
@@ -40,8 +40,8 @@ public class UserHistoryViewHolder extends RecyclerView.ViewHolder {
 //        else
 //        usernameTV.setText(currentUser.getId());
         newStateTV.setText(currentUser.getNewState());
-        timeTV.setText(Utilities.getTime(currentUser.getTimestamp()));
-        dateTV.setText(Utilities.getDate(currentUser.getTimestamp()));
+        timeTV.setText(TimeHandle.getTime(currentUser.getTimestamp()));
+        dateTV.setText(TimeHandle.getDate(currentUser.getTimestamp()));
         putChangedWayImage(currentUser.getChangedWay());
     }
 

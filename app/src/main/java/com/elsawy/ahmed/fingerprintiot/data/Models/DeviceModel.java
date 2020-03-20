@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot.Models;
+package com.elsawy.ahmed.fingerprintiot.data.Models;
 
 
 import android.os.Parcel;

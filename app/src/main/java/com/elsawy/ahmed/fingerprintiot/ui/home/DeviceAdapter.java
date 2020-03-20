@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot.Adapters;
+package com.elsawy.ahmed.fingerprintiot.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +9,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.elsawy.ahmed.fingerprintiot.Activities.DeviceDetailActivity;
-import com.elsawy.ahmed.fingerprintiot.Models.DeviceModel;
+import com.elsawy.ahmed.fingerprintiot.ui.device_detail.DeviceDetailActivity;
+import com.elsawy.ahmed.fingerprintiot.data.Models.DeviceModel;
 import com.elsawy.ahmed.fingerprintiot.R;
-import com.elsawy.ahmed.fingerprintiot.ViewHolder.DeviceViewHolder;
-import com.elsawy.ahmed.fingerprintiot.database.DeviceFirebaseDataBase;
+import com.elsawy.ahmed.fingerprintiot.data.database.DeviceFirebaseDataBase;
 
 import java.util.ArrayList;
 

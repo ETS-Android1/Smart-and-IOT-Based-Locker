@@ -1,11 +1,11 @@
-package com.elsawy.ahmed.fingerprintiot.database;
+package com.elsawy.ahmed.fingerprintiot.data.database;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.elsawy.ahmed.fingerprintiot.Models.HistoryModel;
+import com.elsawy.ahmed.fingerprintiot.data.Models.HistoryModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,7 +14,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class HistoryFirebaseQueryLiveData extends LiveData<ArrayList<HistoryModel>> {
 
@@ -28,8 +27,9 @@ public class HistoryFirebaseQueryLiveData extends LiveData<ArrayList<HistoryMode
     private DatabaseReference deviceUserIdRef;
 
     public HistoryFirebaseQueryLiveData(String deviceKey) {
+        Log.d(LOG_TAG, deviceKey);
         historyQuery = FirebaseDatabase.getInstance().getReference("/devicesHistory")
-                .child(deviceKey).orderByChild("timestamp").limitToLast(20);
+                .child(deviceKey).orderByChild("timestamp").limitToLast(15);
         deviceUserIdRef = FirebaseDatabase.getInstance().getReference("/deviceUserId").child(deviceKey);
 
     }
@@ -52,10 +52,10 @@ public class HistoryFirebaseQueryLiveData extends LiveData<ArrayList<HistoryMode
         public void onDataChange(DataSnapshot dataSnapshot) {
             if (dataSnapshot.getValue() != null) {
                 historyModelList.clear();
-                Log.i("userHistorySnapshot2",dataSnapshot.getChildren().toString());
+                Log.i(LOG_TAG,dataSnapshot.getChildren().toString());
 
                 for (final DataSnapshot userHistorySnapshot : dataSnapshot.getChildren()) {
-                    Log.i("userHistorySnapshot",userHistorySnapshot.toString());
+                    Log.i(LOG_TAG,userHistorySnapshot.toString());
                     HistoryModel currentHistoryModel = userHistorySnapshot.getValue(HistoryModel.class);
 
                     deviceUserIdRef.child(currentHistoryModel.getId()).addValueEventListener(new ValueEventListener() {
@@ -68,7 +68,7 @@ public class HistoryFirebaseQueryLiveData extends LiveData<ArrayList<HistoryMode
                                 Log.i("currentHistoryModel", username);
                             }
                             historyModelList.add(currentHistoryModel);
-                            Collections.reverse(historyModelList); // reverse list to show last change state first
+//                            Collections.reverse(historyModelList); // reverse list to show last change state first
                             setValue(historyModelList);
                         }
 

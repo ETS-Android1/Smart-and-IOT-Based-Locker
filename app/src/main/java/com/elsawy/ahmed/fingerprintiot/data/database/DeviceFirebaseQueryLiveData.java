@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot.database;
+package com.elsawy.ahmed.fingerprintiot.data.database;
 
 
 import android.util.Log;
@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.elsawy.ahmed.fingerprintiot.Models.DeviceModel;
+import com.elsawy.ahmed.fingerprintiot.data.Models.DeviceModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

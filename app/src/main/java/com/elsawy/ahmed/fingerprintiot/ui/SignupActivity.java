@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot.Activities;
+package com.elsawy.ahmed.fingerprintiot.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.elsawy.ahmed.fingerprintiot.MainActivity;
-import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
+import com.elsawy.ahmed.fingerprintiot.ui.home.MainActivity;
+import com.elsawy.ahmed.fingerprintiot.data.SharedPrefManager;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot.Activities;
+package com.elsawy.ahmed.fingerprintiot.ui.device_detail;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,12 +23,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.elsawy.ahmed.fingerprintiot.Adapters.HistoryAdapter;
-import com.elsawy.ahmed.fingerprintiot.Models.DeviceModel;
-import com.elsawy.ahmed.fingerprintiot.Models.HistoryModel;
+import com.elsawy.ahmed.fingerprintiot.data.Models.DeviceModel;
+import com.elsawy.ahmed.fingerprintiot.data.Models.HistoryModel;
 import com.elsawy.ahmed.fingerprintiot.R;
-import com.elsawy.ahmed.fingerprintiot.VerticalSpaceItemDecoration;
-import com.elsawy.ahmed.fingerprintiot.database.DeviceFirebaseDataBase;
+import com.elsawy.ahmed.fingerprintiot.utils.VerticalSpaceItemDecoration;
+import com.elsawy.ahmed.fingerprintiot.data.database.DeviceFirebaseDataBase;
 
 import java.util.ArrayList;
 
@@ -64,7 +63,13 @@ public class DeviceDetailActivity extends AppCompatActivity {
         setupToolbar();
 
         currentDeviceModel = (DeviceModel) getIntent().getParcelableExtra("deviceInfo");
-        Log.i("userID",currentDeviceModel.getUserID());
+        Log.i("userID",
+                currentDeviceModel.getUserID()+
+                currentDeviceModel.getName()+
+                        currentDeviceModel.getPhoneNumber()+
+                        currentDeviceModel.getState()+
+                currentDeviceModel.getKey()
+        );
         setDeviceInfo(currentDeviceModel);
         setupRecyclerView(currentDeviceModel.getKey());
 

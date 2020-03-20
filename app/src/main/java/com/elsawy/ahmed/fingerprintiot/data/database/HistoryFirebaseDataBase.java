@@ -1,9 +1,9 @@
-package com.elsawy.ahmed.fingerprintiot.database;
+package com.elsawy.ahmed.fingerprintiot.data.database;
 
 import android.content.Context;
 
-import com.elsawy.ahmed.fingerprintiot.Models.HistoryModel;
-import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
+import com.elsawy.ahmed.fingerprintiot.data.Models.HistoryModel;
+import com.elsawy.ahmed.fingerprintiot.data.SharedPrefManager;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

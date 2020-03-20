@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot.Activities;
+package com.elsawy.ahmed.fingerprintiot.ui.home;
 
 
 import androidx.annotation.NonNull;
@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.elsawy.ahmed.fingerprintiot.Models.DeviceModel;
-import com.elsawy.ahmed.fingerprintiot.database.DeviceFirebaseQueryLiveData;
+import com.elsawy.ahmed.fingerprintiot.data.Models.DeviceModel;
+import com.elsawy.ahmed.fingerprintiot.data.database.DeviceFirebaseQueryLiveData;
 
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot;
+package com.elsawy.ahmed.fingerprintiot.ui.home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,18 +16,17 @@ import android.content.Intent;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.elsawy.ahmed.fingerprintiot.Activities.AddDevice;
-import com.elsawy.ahmed.fingerprintiot.Activities.DeviceViewModel;
-import com.elsawy.ahmed.fingerprintiot.Activities.LoginActivity;
-import com.elsawy.ahmed.fingerprintiot.Adapters.DeviceAdapter;
-import com.elsawy.ahmed.fingerprintiot.Models.DeviceModel;
-import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
+import com.elsawy.ahmed.fingerprintiot.R;
+import com.elsawy.ahmed.fingerprintiot.utils.VerticalSpaceItemDecoration;
+import com.elsawy.ahmed.fingerprintiot.ui.AddDevice;
+import com.elsawy.ahmed.fingerprintiot.ui.LoginActivity;
+import com.elsawy.ahmed.fingerprintiot.data.Models.DeviceModel;
+import com.elsawy.ahmed.fingerprintiot.data.SharedPrefManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -130,24 +128,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setTitle("");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.add_device) {
-            startActivity(new Intent(MainActivity.this, AddDevice.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        if (id == R.id.add_device) {
+//            startActivity(new Intent(MainActivity.this, AddDevice.class));
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     private void setupDrawerLayout() {
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

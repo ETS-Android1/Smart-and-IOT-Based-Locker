@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot.Adapters;
+package com.elsawy.ahmed.fingerprintiot.ui.device_detail;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -6,16 +6,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.elsawy.ahmed.fingerprintiot.Models.HistoryModel;
+import com.elsawy.ahmed.fingerprintiot.data.Models.HistoryModel;
 import com.elsawy.ahmed.fingerprintiot.R;
-import com.elsawy.ahmed.fingerprintiot.ViewHolder.UserHistoryViewHolder;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HistoryAdapter extends RecyclerView.Adapter<UserHistoryViewHolder> {
 
     private String TAG = "HistoryAdapter";
     private ArrayList<HistoryModel> historyModelList = new ArrayList<>();
-
 
     @NonNull
     @Override
@@ -36,6 +36,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<UserHistoryViewHolder> 
 
     public void setHistoryModelList(ArrayList<HistoryModel> historyModelList) {
         this.historyModelList = historyModelList;
+        Collections.sort(this.historyModelList,Collections.reverseOrder());
         HistoryAdapter.this.notifyDataSetChanged();
     }
 

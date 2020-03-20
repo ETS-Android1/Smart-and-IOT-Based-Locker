@@ -1,10 +1,7 @@
-package com.elsawy.ahmed.fingerprintiot.database;
+package com.elsawy.ahmed.fingerprintiot.data.database;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.elsawy.ahmed.fingerprintiot.Activities.AddDevice;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;

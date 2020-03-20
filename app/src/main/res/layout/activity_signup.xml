@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".Activities.SignupActivity">
+    tools:context=".ui.SignupActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

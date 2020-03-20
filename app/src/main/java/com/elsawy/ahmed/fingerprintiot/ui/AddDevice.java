@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot.Activities;
+package com.elsawy.ahmed.fingerprintiot.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +11,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.elsawy.ahmed.fingerprintiot.Models.SharedPrefManager;
+import com.elsawy.ahmed.fingerprintiot.data.SharedPrefManager;
 import com.elsawy.ahmed.fingerprintiot.R;
-import com.elsawy.ahmed.fingerprintiot.database.DeviceFirebaseDataBase;
+import com.elsawy.ahmed.fingerprintiot.data.database.DeviceFirebaseDataBase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,8 +73,8 @@ public class AddDevice extends AppCompatActivity {
             deviceNameET.setError("At least two characters");
             valid = false;
         }
-        if (userID.length() <= 1) {
-            deviceNameET.setError("required");
+        if (userID.length() < 1) {
+            userIdET.setError("required");
             valid = false;
         }
         if (isNewDevice && devicePhone.length() != 11) {

@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot;
+package com.elsawy.ahmed.fingerprintiot.utils;
 
 import android.graphics.Rect;
 import android.view.View;

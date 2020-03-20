@@ -1,8 +1,8 @@
-package com.elsawy.ahmed.fingerprintiot;
+package com.elsawy.ahmed.fingerprintiot.utils;
 
 import java.util.Calendar;
 
-public class Utilities {
+public class TimeHandle {
 
     public static String getTime(long timestamp) {
 
@@ -13,7 +13,7 @@ public class Utilities {
         int minutes = calendar.get(Calendar.MINUTE);
         String timeForm = (calendar.get(Calendar.AM_PM)) == 0 ? "AM" : "PM";
 
-        return hours +":"+ minutes + " " + timeForm;
+        return (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + " " + timeForm;
     }
 
     public static String getDate(long timestamp) {
@@ -25,7 +25,7 @@ public class Utilities {
         int month = calendar.get(Calendar.MONTH) + 1;
         int year = calendar.get(Calendar.YEAR);
 
-        return day +"-"+ month + "-" + year;
+        return day + "-" + month + "-" + year;
     }
 
 }

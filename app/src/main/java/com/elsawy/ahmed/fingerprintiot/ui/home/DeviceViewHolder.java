@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot.ViewHolder;
+package com.elsawy.ahmed.fingerprintiot.ui.home;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.elsawy.ahmed.fingerprintiot.Models.DeviceModel;
+import com.elsawy.ahmed.fingerprintiot.data.Models.DeviceModel;
 import com.elsawy.ahmed.fingerprintiot.R;
 
 import butterknife.BindView;
