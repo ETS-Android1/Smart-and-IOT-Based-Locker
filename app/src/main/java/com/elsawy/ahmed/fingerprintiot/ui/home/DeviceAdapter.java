@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.elsawy.ahmed.fingerprintiot.ui.device_detail.DeviceDetailActivity;
 import com.elsawy.ahmed.fingerprintiot.data.Models.DeviceModel;
 import com.elsawy.ahmed.fingerprintiot.R;
-import com.elsawy.ahmed.fingerprintiot.data.database.DeviceFirebaseDataBase;
+import com.elsawy.ahmed.fingerprintiot.data.database.InsertUpdateDeviceFirebaseDB;
 
 import java.util.ArrayList;
 
@@ -54,10 +54,10 @@ public class DeviceAdapter  extends RecyclerView.Adapter<DeviceAdapter.DeviceVie
         View.OnClickListener powerButtonListener = view -> {
             if (currentDeviceModel.getState().equals(ON)) {
                 holder.putPowerButtonColor(OFF);
-                DeviceFirebaseDataBase.updateDeviceState(mContext, currentDeviceModel.getKey(), currentDeviceModel.getUserID(), OFF);
+                InsertUpdateDeviceFirebaseDB.updateDeviceState(mContext, currentDeviceModel.getKey(), currentDeviceModel.getUserID(), OFF);
             } else if (currentDeviceModel.getState().equals(OFF)) {
                 holder.putPowerButtonColor(ON);
-                DeviceFirebaseDataBase.updateDeviceState(mContext, currentDeviceModel.getKey(),currentDeviceModel.getUserID(), ON);
+                InsertUpdateDeviceFirebaseDB.updateDeviceState(mContext, currentDeviceModel.getKey(),currentDeviceModel.getUserID(), ON);
             }
         };
 

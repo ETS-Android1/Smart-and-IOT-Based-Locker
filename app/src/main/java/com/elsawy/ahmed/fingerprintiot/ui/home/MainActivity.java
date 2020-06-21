@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.elsawy.ahmed.fingerprintiot.R;
+import com.elsawy.ahmed.fingerprintiot.data.database.DeviceFirebaseQueryLiveData;
 import com.elsawy.ahmed.fingerprintiot.utils.VerticalSpaceItemDecoration;
 import com.elsawy.ahmed.fingerprintiot.ui.add_device.AddDevice;
 import com.elsawy.ahmed.fingerprintiot.authentication.LoginActivity;
@@ -109,9 +110,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         devicesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         devicesRecyclerView.setAdapter(deviceAdapter);
 
-        DeviceViewModel viewModel = ViewModelProviders.of(this).get(DeviceViewModel.class);
-        LiveData<ArrayList<DeviceModel>> liveData = viewModel.getDevicesListLiveData();
-        liveData.observe(this, deviceModels -> {
+        LiveData<ArrayList<DeviceModel>> devicesListLiveData = new DeviceFirebaseQueryLiveData();
+
+        devicesListLiveData.observe(this, deviceModels -> {
             deviceAdapter.setDeviceModelList(deviceModels);
 
             if (deviceModels.size() > 0) {

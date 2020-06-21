@@ -26,8 +26,9 @@ import android.widget.TextView;
 import com.elsawy.ahmed.fingerprintiot.data.Models.DeviceModel;
 import com.elsawy.ahmed.fingerprintiot.data.Models.HistoryModel;
 import com.elsawy.ahmed.fingerprintiot.R;
+import com.elsawy.ahmed.fingerprintiot.data.database.HistoryFirebaseQueryLiveData;
 import com.elsawy.ahmed.fingerprintiot.utils.VerticalSpaceItemDecoration;
-import com.elsawy.ahmed.fingerprintiot.data.database.DeviceFirebaseDataBase;
+import com.elsawy.ahmed.fingerprintiot.data.database.InsertUpdateDeviceFirebaseDB;
 
 import java.util.ArrayList;
 
@@ -83,9 +84,8 @@ public class DeviceDetailActivity extends AppCompatActivity {
         usersRecyclerView.setAdapter(historyAdapter);
 
 
-        HistoryViewModel historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
-        LiveData<ArrayList<HistoryModel>> liveData = historyViewModel.getHistoryListLiveData(deviceKey);
-        liveData.observe(this, historyModelList -> {
+        LiveData<ArrayList<HistoryModel>> historyListLiveData = new HistoryFirebaseQueryLiveData(deviceKey);
+        historyListLiveData.observe(this, historyModelList -> {
             historyAdapter.setHistoryModelList(historyModelList);
             if (historyModelList.size() > 0) {
                 historyImageViewBackground.setVisibility(View.GONE);
@@ -138,10 +138,10 @@ public class DeviceDetailActivity extends AppCompatActivity {
     public void handlePowerBtn() {
 
         if (currentDeviceModel.getState().equals(ON)) {
-            DeviceFirebaseDataBase.updateDeviceState(this, currentDeviceModel.getKey(),currentDeviceModel.getUserID(), OFF);
+            InsertUpdateDeviceFirebaseDB.updateDeviceState(this, currentDeviceModel.getKey(),currentDeviceModel.getUserID(), OFF);
             currentDeviceModel.setState(OFF);
         } else if (currentDeviceModel.getState().equals(OFF)) {
-            DeviceFirebaseDataBase.updateDeviceState(this, currentDeviceModel.getKey(),currentDeviceModel.getUserID(), ON);
+            InsertUpdateDeviceFirebaseDB.updateDeviceState(this, currentDeviceModel.getKey(),currentDeviceModel.getUserID(), ON);
             currentDeviceModel.setState(ON);
         }
         stateTV.setText("State: " + currentDeviceModel.getState());
