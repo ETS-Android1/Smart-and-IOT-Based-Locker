@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot.ui;
+package com.elsawy.ahmed.fingerprintiot.authentication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,15 +59,9 @@ public class LoginActivity extends AppCompatActivity {
 
         this.mAuth = FirebaseAuth.getInstance();
 
-        loginButton.setOnClickListener(view -> login());
         registerTV.setOnClickListener(view -> openSignupActivity());
-        forgotPasswordTV.setOnClickListener(view -> openForgotPasswordActivity());
-    }
-
-    private void openForgotPasswordActivity() {
-//        Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-//        startActivity(intent);
-        showSendEmailCustomDialog();
+        loginButton.setOnClickListener(view -> login());
+        forgotPasswordTV.setOnClickListener(view -> showSendEmailCustomDialog());
     }
 
     private void openSignupActivity() {
@@ -76,8 +70,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
-        Log.d(TAG, "login");
-
         if (!validate()) {
             onLoginFailed();
             return;
@@ -168,7 +160,6 @@ public class LoginActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
         dialog.setContentView(R.layout.activity_forgot_password);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        dialog.setCancelable(false);
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());

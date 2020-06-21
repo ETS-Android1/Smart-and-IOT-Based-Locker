@@ -23,8 +23,8 @@ import android.widget.TextView;
 
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.elsawy.ahmed.fingerprintiot.utils.VerticalSpaceItemDecoration;
-import com.elsawy.ahmed.fingerprintiot.ui.AddDevice;
-import com.elsawy.ahmed.fingerprintiot.ui.LoginActivity;
+import com.elsawy.ahmed.fingerprintiot.ui.add_device.AddDevice;
+import com.elsawy.ahmed.fingerprintiot.authentication.LoginActivity;
 import com.elsawy.ahmed.fingerprintiot.data.Models.DeviceModel;
 import com.elsawy.ahmed.fingerprintiot.data.SharedPrefManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

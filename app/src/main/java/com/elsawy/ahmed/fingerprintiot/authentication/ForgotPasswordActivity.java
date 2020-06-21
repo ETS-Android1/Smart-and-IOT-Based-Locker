@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot.ui;
+package com.elsawy.ahmed.fingerprintiot.authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 

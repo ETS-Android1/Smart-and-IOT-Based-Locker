@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.fingerprintiot.ui;
+package com.elsawy.ahmed.fingerprintiot.ui.add_device;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -120,10 +120,8 @@ public class AddDevice extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
