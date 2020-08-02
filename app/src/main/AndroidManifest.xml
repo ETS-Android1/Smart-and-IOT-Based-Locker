@@ -13,7 +13,6 @@
         <activity android:name=".ui.device_detail.DeviceDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.add_device.AddDevice" />
-        <activity android:name=".authentication.ForgotPasswordActivity" />
         <activity android:name=".authentication.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
