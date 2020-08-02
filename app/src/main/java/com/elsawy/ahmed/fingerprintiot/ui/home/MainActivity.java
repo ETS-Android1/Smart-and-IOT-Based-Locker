@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,8 +30,6 @@ import com.elsawy.ahmed.fingerprintiot.data.SharedPrefManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -41,7 +38,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private String TAG = "MainActivity";
 
     @BindView(R.id.devices_recycler_view)
     RecyclerView devicesRecyclerView;
@@ -54,28 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.sign_up_toolbar)
     Toolbar toolbar;
     @BindView(R.id.main_activity_background)
-    ImageView RecyclerViewimageBackground;
-
-    private FirebaseAuth mAuth;
-
-    static {
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        this.mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        if (currentUser == null) {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-            Log.d(TAG, "You are not SignIn");
-            finish();
-        }
-    }
+    ImageView RecyclerViewImageBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,13 +58,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(this);
-        if (sharedPrefManager.isLoggedIn())            {
-            putNavigationHeader();
-            setupToolbar();
-            setupDrawerLayout();
-            setupRecyclerView();
-        }
+        putNavigationHeader();
+        setupToolbar();
+        setupDrawerLayout();
+        setupRecyclerView();
         addDeviceFab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddDevice.class)));
     }
 
@@ -111,42 +83,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         devicesRecyclerView.setAdapter(deviceAdapter);
 
         LiveData<ArrayList<DeviceModel>> devicesListLiveData = new DeviceFirebaseQueryLiveData();
-
         devicesListLiveData.observe(this, deviceModels -> {
             deviceAdapter.setDeviceModelList(deviceModels);
 
             if (deviceModels.size() > 0) {
-                RecyclerViewimageBackground.setVisibility(View.GONE);
+                RecyclerViewImageBackground.setVisibility(View.GONE);
             } else {
-                RecyclerViewimageBackground.setVisibility(View.VISIBLE);
+                RecyclerViewImageBackground.setVisibility(View.VISIBLE);
             }
         });
-
     }
 
     private void setupToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//
-//        if (id == R.id.add_device) {
-//            startActivity(new Intent(MainActivity.this, AddDevice.class));
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 
     private void setupDrawerLayout() {
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -158,10 +109,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_logout:
-                signOut();
-                break;
+        if (item.getItemId() == R.id.nav_logout) {
+            signOut();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);  // close DrawerLayout after click buttons
@@ -169,10 +118,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void signOut() {
-        SharedPrefManager.getInstance(this).logout();
         FirebaseAuth.getInstance().signOut();
+        SharedPrefManager.getInstance(this).logout();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        finish();
     }
 }

@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.elsawy.ahmed.fingerprintiot.data.SharedPrefManager;
 import com.elsawy.ahmed.fingerprintiot.R;
-import com.elsawy.ahmed.fingerprintiot.data.database.InsertUpdateDeviceFirebaseDB;
+import com.elsawy.ahmed.fingerprintiot.data.database.DeviceFirebaseInsertUpdateDB;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,7 +62,7 @@ public class AddDevice extends AppCompatActivity {
 
         if (isValidData(deviceName, userID, devicePhone, key, isNewDevice)) {
             String myUsername = SharedPrefManager.getInstance(getApplicationContext()).getUsername();
-            InsertUpdateDeviceFirebaseDB.insertNewDevice(myUsername, deviceName, userID, deviceType, devicePhone, isNewDevice, key);
+            DeviceFirebaseInsertUpdateDB.insertNewDevice(myUsername, deviceName, userID, deviceType, devicePhone, isNewDevice, key);
             finish();
         }
     }

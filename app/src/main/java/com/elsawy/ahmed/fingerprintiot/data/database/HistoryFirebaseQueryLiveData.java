@@ -1,7 +1,5 @@
 package com.elsawy.ahmed.fingerprintiot.data.database;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;

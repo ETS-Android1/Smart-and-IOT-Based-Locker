@@ -10,7 +10,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InsertUpdateDeviceFirebaseDB {
+public class DeviceFirebaseInsertUpdateDB {
 
     private static final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static final FirebaseUser userData = mAuth.getCurrentUser();
@@ -19,7 +19,7 @@ public class InsertUpdateDeviceFirebaseDB {
 
     public static void updateDeviceState(final Context mContext, final String key, final String userID, final String state) {
         REF.child("Devices").child(key).child("state").setValue(state);
-        InsertHistoryFirebaseDB.InsertNewHistory(mContext, key,userID, state);
+        HistoryFirebaseInsertDB.InsertNewHistory(mContext, key,userID, state);
     }
 
     public static void insertNewDevice(String myUsername, String deviceName, String userID, String deviceType, String devicePhone, boolean isNewDevice, String existDeviceKey) {
@@ -41,8 +41,6 @@ public class InsertUpdateDeviceFirebaseDB {
         userDevice.put("deviceName", deviceName);
         userDevice.put("userID", userID);
         REF.child("userDevices").child(userData.getUid()).child(key).setValue(userDevice);
-
-//        REF.child("userDevices").child(userData.getUid()).child(key).child("deviceName").setValue(deviceName);
 
         REF.child("deviceUserId").child(key).child(userID).setValue(myUsername);
 

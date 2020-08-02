@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +27,7 @@ import com.elsawy.ahmed.fingerprintiot.data.Models.HistoryModel;
 import com.elsawy.ahmed.fingerprintiot.R;
 import com.elsawy.ahmed.fingerprintiot.data.database.HistoryFirebaseQueryLiveData;
 import com.elsawy.ahmed.fingerprintiot.utils.VerticalSpaceItemDecoration;
-import com.elsawy.ahmed.fingerprintiot.data.database.InsertUpdateDeviceFirebaseDB;
+import com.elsawy.ahmed.fingerprintiot.data.database.DeviceFirebaseInsertUpdateDB;
 
 import java.util.ArrayList;
 
@@ -138,10 +137,10 @@ public class DeviceDetailActivity extends AppCompatActivity {
     public void handlePowerBtn() {
 
         if (currentDeviceModel.getState().equals(ON)) {
-            InsertUpdateDeviceFirebaseDB.updateDeviceState(this, currentDeviceModel.getKey(),currentDeviceModel.getUserID(), OFF);
+            DeviceFirebaseInsertUpdateDB.updateDeviceState(this, currentDeviceModel.getKey(),currentDeviceModel.getUserID(), OFF);
             currentDeviceModel.setState(OFF);
         } else if (currentDeviceModel.getState().equals(OFF)) {
-            InsertUpdateDeviceFirebaseDB.updateDeviceState(this, currentDeviceModel.getKey(),currentDeviceModel.getUserID(), ON);
+            DeviceFirebaseInsertUpdateDB.updateDeviceState(this, currentDeviceModel.getKey(),currentDeviceModel.getUserID(), ON);
             currentDeviceModel.setState(ON);
         }
         stateTV.setText("State: " + currentDeviceModel.getState());

@@ -51,7 +51,6 @@ public class DeviceFirebaseQueryLiveData extends LiveData<ArrayList<DeviceModel>
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
 
-            Log.i("mvvm","onDataChange");
             if (dataSnapshot.getValue() != null) {
                 DevicesList.clear();
 
@@ -88,13 +87,10 @@ public class DeviceFirebaseQueryLiveData extends LiveData<ArrayList<DeviceModel>
                             }
                             Log.i("TAG4", DevicesList.size()+"");
                             setValue(DevicesList);
-                            Log.i("mvvm","onDataChange" + DevicesList.size());
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Log.i("mvvm","onCancelled" + DevicesList.size());
-
                         }
                     });
                 }
