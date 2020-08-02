@@ -30,6 +30,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -54,14 +55,9 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
         ButterKnife.bind(this);
         setupToolbar();
-
         mAuth = FirebaseAuth.getInstance();
-
-        signupButton.setOnClickListener(view -> signup());
-
     }
 
     private void setupToolbar(){
@@ -71,10 +67,10 @@ public class SignupActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
     }
 
-    private void signup() {
-        Log.d(TAG, "Signup");
+    @OnClick(R.id.sign_up_btn)
+    void signup() {
 
-        if (!validate()) {
+        if (!isValidInputs()) {
             onSignupFailed();
             return;
         }
@@ -104,7 +100,7 @@ public class SignupActivity extends AppCompatActivity {
         signupButton.setEnabled(true);
     }
 
-    private boolean validate() {
+    private boolean isValidInputs() {
         boolean valid = true;
 
         String name = nameET.getText().toString();
@@ -146,19 +142,16 @@ public class SignupActivity extends AppCompatActivity {
     private void createAccount(final String name, final String email, final String password) {
 
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "createUserWithEmail:success");
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "createUserWithEmail:success");
 
-                            saveProfileData(name, email);
-                            onSignupSuccess();
+                        saveProfileData(name, email);
+                        onSignupSuccess();
 
-                        } else {
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            onSignupFailed();
-                        }
+                    } else {
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        onSignupFailed();
                     }
                 });
 
@@ -197,10 +190,8 @@ public class SignupActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                onBackPressed();
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
