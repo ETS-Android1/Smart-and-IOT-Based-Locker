@@ -105,7 +105,7 @@ public class SignupActivity extends AppCompatActivity {
         String password = passwordET.getText().toString();
         String confirmPassword = confirmPasswordET.getText().toString();
 
-        if (name.isEmpty() || name.length() < 3) {  // check name validation
+        if (name.length() < 3) {  // check name validation
             nameET.setError("at least 3 characters");
             valid = false;
         } else {

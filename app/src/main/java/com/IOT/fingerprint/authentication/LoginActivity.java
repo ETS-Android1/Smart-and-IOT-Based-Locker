@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     static {
+        // to offline firebase database
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
