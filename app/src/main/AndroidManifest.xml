@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.elsawy.ahmed.fingerprintiot">
+    package="com.IOT.fingerprint">
     <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <application
@@ -10,10 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.device_detail.DeviceDetailActivity"
+        <activity android:name="com.IOT.fingerprint.ui.device_detail.DeviceDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.add_device.AddDevice" />
-        <activity android:name=".authentication.LoginActivity"
+        <activity android:name="com.IOT.fingerprint.ui.add_device.AddDevice" />
+        <activity android:name="com.IOT.fingerprint.authentication.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,9 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".authentication.SignupActivity"
+        <activity android:name="com.IOT.fingerprint.authentication.SignupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.home.MainActivity"/>
+        <activity android:name="com.IOT.fingerprint.ui.home.MainActivity"/>
 
     </application>
 
