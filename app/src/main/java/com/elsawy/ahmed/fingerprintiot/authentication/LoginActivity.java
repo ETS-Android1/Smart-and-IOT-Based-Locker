@@ -15,7 +15,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elsawy.ahmed.fingerprintiot.ui.home.MainActivity;
@@ -34,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -46,10 +46,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText passwordET;
     @BindView(R.id.login_button)
     Button loginButton;
-    @BindView(R.id.forgot_password_tv)
-    TextView forgotPasswordTV;
-    @BindView(R.id.login_register_tv)
-    TextView registerTV;
     private ProgressDialog progressDialog;
 
     static {
@@ -63,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         this.mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
+            // you are already login
             openMainActivity();
         }
     }
@@ -72,19 +69,18 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
-        registerTV.setOnClickListener(view -> openSignupActivity());
-        loginButton.setOnClickListener(view -> login());
-        forgotPasswordTV.setOnClickListener(view -> showSendEmailCustomDialog());
     }
 
-    private void openSignupActivity() {
+    @OnClick(R.id.open_sign_up_tv)
+    void openSignupActivity() {
         Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
         startActivity(intent);
     }
 
-    private void login() {
-        if (!validate()) {
+    @OnClick(R.id.login_button)
+    void login() {
+
+        if (!isValidEmailAndPassword()) {
             onLoginFailed();
             return;
         }
@@ -99,22 +95,13 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void onLoginSuccess() {
-        loginButton.setEnabled(true);
-        hideProgressDialog();
-
-        Intent i = new Intent(LoginActivity.this, MainActivity.class);
-        LoginActivity.this.startActivity(i);
-        finish();
-    }
-
     private void onLoginFailed() {
         Toast.makeText(getBaseContext(), "login failed", Toast.LENGTH_LONG).show();
         hideProgressDialog();
         loginButton.setEnabled(true);
     }
 
-    private boolean validate() {
+    private boolean isValidEmailAndPassword() {
         boolean valid = true;
 
         String email = emailET.getText().toString();
@@ -143,8 +130,9 @@ public class LoginActivity extends AppCompatActivity {
         public void onComplete(@NonNull Task<AuthResult> task) {
             if (task.isSuccessful()) {
                 Log.d(TAG, "signInWithEmail:success");
-                onLoginSuccess();
-                getUserInfo();
+                loginButton.setEnabled(true);
+                hideProgressDialog();
+                saveUserDataInSharedPreferences();
             } else {
                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                 onLoginFailed();
@@ -169,7 +157,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void showSendEmailCustomDialog() {
+    @OnClick(R.id.forgot_password_tv)
+    void showSendEmailCustomDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
         dialog.setContentView(R.layout.activity_forgot_password);
@@ -208,12 +197,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void openMainActivity() {
-        Intent i = new Intent(LoginActivity.this, MainActivity.class);
-        LoginActivity.this.startActivity(i);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        LoginActivity.this.startActivity(intent);
         finish();
     }
 
-    public void getUserInfo() {
+    public void saveUserDataInSharedPreferences() {
         String userId = FirebaseAuth.getInstance().getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
