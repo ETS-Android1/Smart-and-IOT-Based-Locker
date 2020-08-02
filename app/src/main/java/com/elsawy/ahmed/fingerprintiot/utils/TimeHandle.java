@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public class TimeHandle {
 
-    public static String getTime(long timestamp) {
+    public static String convertTimestampToTime(long timestamp) {
 
         final Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timestamp * 1000);
@@ -16,7 +16,7 @@ public class TimeHandle {
         return (hours < 10 ? (hours == 0 ? 12 : "0" + hours) : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + " " + timeForm;
     }
 
-    public static String getDate(long timestamp) {
+    public static String convertTimestampToDate(long timestamp) {
 
         final Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timestamp * 1000);

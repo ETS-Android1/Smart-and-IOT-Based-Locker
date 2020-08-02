@@ -14,7 +14,6 @@ import com.elsawy.ahmed.fingerprintiot.R;
 import com.elsawy.ahmed.fingerprintiot.utils.TimeHandle;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,8 +64,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.UserHist
         public void bindToUserHistory(HistoryModel currentUser) {
             usernameTV.setText(currentUser.getUsername());
             newStateTV.setText(currentUser.getNewState());
-            timeTV.setText(TimeHandle.getTime(currentUser.getTimestamp()));
-            dateTV.setText(TimeHandle.getDate(currentUser.getTimestamp()));
+            timeTV.setText(TimeHandle.convertTimestampToTime(currentUser.getTimestamp()));
+            dateTV.setText(TimeHandle.convertTimestampToDate(currentUser.getTimestamp()));
             putChangedWayImage(currentUser.getChangedWay());
         }
 
