@@ -32,10 +32,7 @@ public class SharedPrefManager {
         editor.apply();
         return true;
     }
-    public boolean isLoggedIn() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(KEY_USER_EMAIL, null) != null;
-    }
+
     public boolean logout() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -43,6 +40,7 @@ public class SharedPrefManager {
         editor.apply();
         return true;
     }
+    
     public String getUsername() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USERNAME, null);
