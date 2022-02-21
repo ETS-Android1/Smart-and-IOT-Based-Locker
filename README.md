@@ -4,6 +4,11 @@
 It’s an android application was written by java,It’s used to open the lock by Firebase Realtime Database or GSM, and
 save the history of opening and closing the lock.
 
+## Screenshot
+
+![Alt text](https://github.com/Ahmed7Elsawy/Smart-and-IOT-Based-Locker/blob/master/lock.png?raw=true "Optional Title")
+
+
 
 ## Demo
 
